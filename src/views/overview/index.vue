@@ -4,22 +4,24 @@
       <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
       <mt-button icon="more" slot="right" @click="popupVisible = true"></mt-button>
     </mt-header>
-    <section class="app-main">
-      <div class="line"><h2>2018年10月企业能源消耗总览</h2></div>
-      <div class="line"><span @click="openPiker">选择日期</span></div>
-      <div class="line">
-        <h3>企业能源消耗总量</h3>
-        <div class="line-item">上月能源总消费量：1000吨标煤</div>
-        <div class="line-item">电量：800千瓦时</div>
-        <div class="line-item">水量：10吨</div>
-        <div class="line-item">压缩空气：10立方米</div>
-        <div class="line-item">高温水：100吉焦</div>
-        <div class="line-item">天然气：8立方米</div>
+    <div class="app-main">
+      <div>
+        <div class="line"><h2>2018年10月企业能源消耗总览</h2></div>
+        <div class="line"><span @click="openPiker">选择日期</span></div>
+        <div class="line">
+          <h3>企业能源消耗总量</h3>
+          <div class="line-item">上月能源总消费量：1000吨标煤</div>
+          <div class="line-item">电量：800千瓦时</div>
+          <div class="line-item">水量：10吨</div>
+          <div class="line-item">压缩空气：10立方米</div>
+          <div class="line-item">高温水：100吉焦</div>
+          <div class="line-item">天然气：8立方米</div>
+        </div>
+        <div class="chart-line">
+          <pie-chart />
+        </div>
       </div>
-      <div class="chart-line">
-        <pie-chart />
-      </div>
-    </section>
+    </div>
     <mt-datetime-picker
       class="only-month"
       v-model="pickerValue"
@@ -78,7 +80,6 @@ export default {
       .chart-line
         background: #fff
         padding-top: 15px
-        min-height: calc(100vh - 340px)
       .line
         padding: 10px
         box-sizing: border-box

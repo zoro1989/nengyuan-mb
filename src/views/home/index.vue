@@ -5,68 +5,70 @@
         <svg-icon icon-class="logout" style="font-size: 18px" slot="icon" />
       </mt-button>
     </mt-header>
-    <section class="app-main">
-      <div class="card-box">
-        <div class="card-panel" @click="changeRoute('/overview')">
-          <div class="card-panel-icon-wrapper">
-            <svg-icon icon-class="nyzl" class-name="card-panel-icon" />
-            <div class="card-panel-text">能源总览</div>
+    <div class="app-main">
+      <div>
+        <div class="card-box">
+          <div class="card-panel" @click="changeRoute('/overview')">
+            <div class="card-panel-icon-wrapper">
+              <svg-icon icon-class="nyzl" class-name="card-panel-icon" />
+              <div class="card-panel-text">能源总览</div>
+            </div>
+          </div>
+          <div class="card-panel" @click="changeRoute('/enterprise')">
+            <div class="card-panel-icon-wrapper">
+              <svg-icon icon-class="qyydl" class-name="card-panel-icon" />
+              <div class="card-panel-text">企业用电量</div>
+            </div>
+          </div>
+          <div class="card-panel" @click="changeRoute('/workshop')">
+            <div class="card-panel-icon-wrapper">
+              <svg-icon icon-class="cjydl" class-name="card-panel-icon" />
+              <div class="card-panel-text">车间用电量</div>
+            </div>
           </div>
         </div>
-        <div class="card-panel" @click="changeRoute('/enterprise')">
-          <div class="card-panel-icon-wrapper">
-            <svg-icon icon-class="qyydl" class-name="card-panel-icon" />
-            <div class="card-panel-text">企业用电量</div>
+        <div class="card-box">
+          <div class="card-panel" @click="changeRoute('/device')">
+            <div class="card-panel-icon-wrapper">
+              <svg-icon icon-class="sbydl" class-name="card-panel-icon" />
+              <div class="card-panel-text">设备用电量</div>
+            </div>
+          </div>
+          <div class="card-panel" @click="changeRoute('/indicator')">
+            <div class="card-panel-icon-wrapper">
+              <svg-icon icon-class="nxzb" class-name="card-panel-icon" />
+              <div class="card-panel-text">能效指标</div>
+            </div>
+          </div>
+          <div class="card-panel" @click="changeRoute('/realtime')">
+            <div class="card-panel-icon-wrapper">
+              <svg-icon icon-class="ssjc" class-name="card-panel-icon" />
+              <div class="card-panel-text">实时监测</div>
+            </div>
           </div>
         </div>
-        <div class="card-panel" @click="changeRoute('/workshop')">
-          <div class="card-panel-icon-wrapper">
-            <svg-icon icon-class="cjydl" class-name="card-panel-icon" />
-            <div class="card-panel-text">车间用电量</div>
+        <div class="card-box">
+          <div class="card-panel">
+            <div class="card-panel-icon-wrapper">
+              <svg-icon icon-class="ssjk" class-name="card-panel-icon" />
+              <div class="card-panel-text">实时监控</div>
+            </div>
+          </div>
+          <div class="card-panel" @click="changeRoute('/warning')">
+            <div class="card-panel-icon-wrapper">
+              <svg-icon icon-class="ycbj" class-name="card-panel-icon" />
+              <div class="card-panel-text">异常报警</div>
+            </div>
+          </div>
+          <div class="card-panel">
+            <div class="card-panel-icon-wrapper">
+              <svg-icon icon-class="dlwlt" class-name="card-panel-icon" />
+              <div class="card-panel-text">动力网络图</div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="card-box">
-        <div class="card-panel" @click="changeRoute('/device')">
-          <div class="card-panel-icon-wrapper">
-            <svg-icon icon-class="sbydl" class-name="card-panel-icon" />
-            <div class="card-panel-text">设备用电量</div>
-          </div>
-        </div>
-        <div class="card-panel" @click="changeRoute('/indicator')">
-          <div class="card-panel-icon-wrapper">
-            <svg-icon icon-class="nxzb" class-name="card-panel-icon" />
-            <div class="card-panel-text">能效指标</div>
-          </div>
-        </div>
-        <div class="card-panel" @click="changeRoute('/realtime')">
-          <div class="card-panel-icon-wrapper">
-            <svg-icon icon-class="ssjc" class-name="card-panel-icon" />
-            <div class="card-panel-text">实时监测</div>
-          </div>
-        </div>
-      </div>
-      <div class="card-box">
-        <div class="card-panel">
-          <div class="card-panel-icon-wrapper">
-            <svg-icon icon-class="ssjk" class-name="card-panel-icon" />
-            <div class="card-panel-text">实时监控</div>
-          </div>
-        </div>
-        <div class="card-panel" @click="changeRoute('/warning')">
-          <div class="card-panel-icon-wrapper">
-            <svg-icon icon-class="ycbj" class-name="card-panel-icon" />
-            <div class="card-panel-text">异常报警</div>
-          </div>
-        </div>
-        <div class="card-panel">
-          <div class="card-panel-icon-wrapper">
-            <svg-icon icon-class="dlwlt" class-name="card-panel-icon" />
-            <div class="card-panel-text">动力网络图</div>
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
   </div>
 </template>
 <script>

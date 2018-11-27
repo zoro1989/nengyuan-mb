@@ -4,21 +4,23 @@
       <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
       <mt-button icon="more" slot="right" @click="popupVisible = true"></mt-button>
     </mt-header>
-    <section class="app-main">
-      <div class="line">
-        <h3>系统运行监测</h3>
-        <div class="line-item">一汽大众公司能源管理信息系统数据传输<span class="ball green"></span></div>
-        <div class="line-item">一汽轿车公司能源管理信息系统数据传输<span class="ball green"></span></div>
-        <div class="line-item">吉林汽车有限公司能源管理信息系统数据传输<span class="ball green"></span></div>
-        <div class="line-item">一汽丰越公司能源管理信息系统数据传输<span class="ball red"></span></div>
+    <div class="app-main">
+      <div>
+        <div class="line">
+          <h3>系统运行监测</h3>
+          <div class="line-item">一汽大众公司能源管理信息系统数据传输<span class="ball green"></span></div>
+          <div class="line-item">一汽轿车公司能源管理信息系统数据传输<span class="ball green"></span></div>
+          <div class="line-item">吉林汽车有限公司能源管理信息系统数据传输<span class="ball green"></span></div>
+          <div class="line-item">一汽丰越公司能源管理信息系统数据传输<span class="ball red"></span></div>
+        </div>
+        <div class="line">
+          <h3>能源预警/报警</h3>
+          <div class="line-item">部门：解放事业部</div>
+          <div class="line-item">能源预警/报警内容：3月份累计万元产值综合能耗超标5%</div>
+          <div class="line-item small">系统分析结果：3月份实际产值比计划产值减少9.28%，单车电耗高于计划值5.14</div>
+        </div>
       </div>
-      <div class="line">
-        <h3>能源预警/报警</h3>
-        <div class="line-item">部门：解放事业部</div>
-        <div class="line-item">能源预警/报警内容：3月份累计万元产值综合能耗超标5%</div>
-        <div class="line-item small">系统分析结果：3月份实际产值比计划产值减少9.28%，单车电耗高于计划值5.14</div>
-      </div>
-    </section>
+    </div>
   </div>
 </template>
 <script>
@@ -74,7 +76,6 @@ export default {
       .chart-line
         background: #fff
         padding-top: 15px
-        min-height: calc(100vh - 340px)
       .flexable
         display: flex
         .line

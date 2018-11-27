@@ -20,17 +20,19 @@ body, html
     //main-container全局样式
     .main-container
       min-height: 100%
-      transition: margin-left .28s
       position: relative
       .icon-button
         extend-click()
       .app-main
         /*50 = navbar  */
         position: absolute
-        top: 40px
-        min-height: calc(100vh - 40px)
         width: 100%
-        overflow: hidden
+        top: 40px
+        left: 0
+        right: 0
+        bottom: 0
+        overflow: scroll
+        -webkit-overflow-scrolling: touch
         background-color: #f0f2f5
         padding: 10px
       .app-container

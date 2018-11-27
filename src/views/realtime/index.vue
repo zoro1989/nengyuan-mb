@@ -4,41 +4,43 @@
       <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
       <mt-button icon="more" slot="right" @click="popupVisible = true"></mt-button>
     </mt-header>
-    <section class="app-main">
-      <div class="line"><h2>空调设备可视化管理看板</h2></div>
-      <div class="line"><span @click="openPiker">选择日期</span></div>
-      <div class="line">
-        <h3>三相电流</h3>
-        <h4>起止日期：2018年10月1日-2018年10月31日</h4>
-        <line-chart :chart-data="lineChartData" />
-      </div>
-      <div class="line">
-        <h3>状态</h3>
-        <div class="line-item">额定电流le：200A</div>
-        <div class="line-item">额定功率Pe</div>
-        <div class="line-item">Imax</div>
-        <div class="line-item">Iave</div>
-        <div class="line-item">Imin</div>
-        <div class="line-item">Pmax</div>
-        <div class="line-item">Pave</div>
-        <div class="line-item">Pmin</div>
-        <div class="line-item switch"><mt-switch v-model="isOpen">开关</mt-switch></div>
-      </div>
-      <div class="flexable">
+    <div class="app-main">
+      <div>
+        <div class="line"><h2>空调设备可视化管理看板</h2></div>
+        <div class="line"><span @click="openPiker">选择日期</span></div>
         <div class="line">
-          <h3>峰值</h3>
-          <div class="line-item">昨天：<span>200</span></div>
-          <div class="line-item">今天：<span>200</span></div>
-          <div class="line-item">对比：<span>200</span></div>
+          <h3>三相电流</h3>
+          <h4>起止日期：2018年10月1日-2018年10月31日</h4>
+          <line-chart :chart-data="lineChartData" />
         </div>
         <div class="line">
-          <h3>谷值</h3>
-          <div class="line-item">昨天：<span>200</span></div>
-          <div class="line-item">今天：<span>200</span></div>
-          <div class="line-item">对比：<span>200</span></div>
+          <h3>状态</h3>
+          <div class="line-item">额定电流le：200A</div>
+          <div class="line-item">额定功率Pe</div>
+          <div class="line-item">Imax</div>
+          <div class="line-item">Iave</div>
+          <div class="line-item">Imin</div>
+          <div class="line-item">Pmax</div>
+          <div class="line-item">Pave</div>
+          <div class="line-item">Pmin</div>
+          <div class="line-item switch"><mt-switch v-model="isOpen">开关</mt-switch></div>
+        </div>
+        <div class="flexable">
+          <div class="line">
+            <h3>峰值</h3>
+            <div class="line-item">昨天：<span>200</span></div>
+            <div class="line-item">今天：<span>200</span></div>
+            <div class="line-item">对比：<span>200</span></div>
+          </div>
+          <div class="line">
+            <h3>谷值</h3>
+            <div class="line-item">昨天：<span>200</span></div>
+            <div class="line-item">今天：<span>200</span></div>
+            <div class="line-item">对比：<span>200</span></div>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
     <mt-datetime-picker
       class="only-month"
       v-model="pickerValue"
@@ -117,7 +119,6 @@ export default {
       .chart-line
         background: #fff
         padding-top: 15px
-        min-height: calc(100vh - 340px)
       .flexable
         display: flex
         .line

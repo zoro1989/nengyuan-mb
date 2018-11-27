@@ -3,157 +3,159 @@
     <mt-header fixed title="企业用电量">
       <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
     </mt-header>
-    <section class="app-main">
-      <div class="line"><span @click="popupVisible = true">选择能源类别</span></div>
-      <div class="line"><span @click="openPikerDate">选择日期</span></div>
-      <div class="chart-line">
-        <line-chart :chart-data="lineChartData" />
+    <div class="app-main">
+      <div>
+        <div class="line"><span @click="popupVisible = true">选择能源类别</span></div>
+        <div class="line"><span @click="openPikerDate">选择日期</span></div>
+        <div class="chart-line">
+          <line-chart :chart-data="lineChartData" />
+        </div>
+        <div class="line">
+          <h3>能源指标：能源消耗总量</h3>
+          <h4>累计指标值</h4>
+          <h4>本月差值：8404</h4>
+          <h4>已用占计划百分比：101.05%</h4>
+          <h4>本月评价</h4>
+          <ul class="line-group">
+            <li class="line-box">
+              <div class="line-item big">2018年11月1日</div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c1"></span>
+              </span>
+                计划用量：9128.04
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c2"></span>
+              </span>
+                实际用量:4683
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c3"><span class="ball"></span></span>
+              </span>
+                计划累计用量:9128.04
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c4"><span class="ball"></span></span>
+              </span>
+                实际累计用量:4683
+              </div>
+            </li>
+            <li class="line-box">
+              <div class="line-item big">2018年11月1日</div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c1"></span>
+              </span>
+                计划用量：9128.04
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c2"></span>
+              </span>
+                实际用量:4683
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c3"><span class="ball"></span></span>
+              </span>
+                计划累计用量:9128.04
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c4"><span class="ball"></span></span>
+              </span>
+                实际累计用量:4683
+              </div>
+            </li>
+            <li class="line-box">
+              <div class="line-item big">2018年11月1日</div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c1"></span>
+              </span>
+                计划用量：9128.04
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c2"></span>
+              </span>
+                实际用量:4683
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c3"><span class="ball"></span></span>
+              </span>
+                计划累计用量:9128.04
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c4"><span class="ball"></span></span>
+              </span>
+                实际累计用量:4683
+              </div>
+            </li>
+            <li class="line-box">
+              <div class="line-item big">2018年11月1日</div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c1"></span>
+              </span>
+                计划用量：9128.04
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c2"></span>
+              </span>
+                实际用量:4683
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c3"><span class="ball"></span></span>
+              </span>
+                计划累计用量:9128.04
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c4"><span class="ball"></span></span>
+              </span>
+                实际累计用量:4683
+              </div>
+            </li>
+            <li class="line-box">
+              <div class="line-item big">2018年11月1日</div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c1"></span>
+              </span>
+                计划用量：9128.04
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c2"></span>
+              </span>
+                实际用量:4683
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c3"><span class="ball"></span></span>
+              </span>
+                计划累计用量:9128.04
+              </div>
+              <div class="line-item big">
+              <span class="legend">
+                <span class="c4"><span class="ball"></span></span>
+              </span>
+                实际累计用量:4683
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="line">
-        <h3>能源指标：能源消耗总量</h3>
-        <h4>累计指标值</h4>
-        <h4>本月差值：8404</h4>
-        <h4>已用占计划百分比：101.05%</h4>
-        <h4>本月评价</h4>
-        <ul class="line-group">
-          <li class="line-box">
-            <div class="line-item big">2018年11月1日</div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c1"></span>
-              </span>
-              计划用量：9128.04
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c2"></span>
-              </span>
-              实际用量:4683
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c3"><span class="ball"></span></span>
-              </span>
-              计划累计用量:9128.04
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c4"><span class="ball"></span></span>
-              </span>
-              实际累计用量:4683
-            </div>
-          </li>
-          <li class="line-box">
-            <div class="line-item big">2018年11月1日</div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c1"></span>
-              </span>
-              计划用量：9128.04
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c2"></span>
-              </span>
-              实际用量:4683
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c3"><span class="ball"></span></span>
-              </span>
-              计划累计用量:9128.04
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c4"><span class="ball"></span></span>
-              </span>
-              实际累计用量:4683
-            </div>
-          </li>
-          <li class="line-box">
-            <div class="line-item big">2018年11月1日</div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c1"></span>
-              </span>
-              计划用量：9128.04
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c2"></span>
-              </span>
-              实际用量:4683
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c3"><span class="ball"></span></span>
-              </span>
-              计划累计用量:9128.04
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c4"><span class="ball"></span></span>
-              </span>
-              实际累计用量:4683
-            </div>
-          </li>
-          <li class="line-box">
-            <div class="line-item big">2018年11月1日</div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c1"></span>
-              </span>
-              计划用量：9128.04
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c2"></span>
-              </span>
-              实际用量:4683
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c3"><span class="ball"></span></span>
-              </span>
-              计划累计用量:9128.04
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c4"><span class="ball"></span></span>
-              </span>
-              实际累计用量:4683
-            </div>
-          </li>
-          <li class="line-box">
-            <div class="line-item big">2018年11月1日</div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c1"></span>
-              </span>
-              计划用量：9128.04
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c2"></span>
-              </span>
-              实际用量:4683
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c3"><span class="ball"></span></span>
-              </span>
-              计划累计用量:9128.04
-            </div>
-            <div class="line-item big">
-              <span class="legend">
-                <span class="c4"><span class="ball"></span></span>
-              </span>
-              实际累计用量:4683
-            </div>
-          </li>
-        </ul>
-      </div>
-    </section>
+    </div>
     <mt-popup
       class="type-picker"
       v-model="popupVisible"

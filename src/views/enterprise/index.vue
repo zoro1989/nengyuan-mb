@@ -3,36 +3,38 @@
     <mt-header fixed title="企业用电量">
       <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
     </mt-header>
-    <section class="app-main">
-      <div class="line"><span @click="popupVisible = true">选择能源类别</span></div>
-      <div class="line"><span @click="openPikerDate">选择日期</span></div>
-      <div class="chart-line">
-        <line-chart :chart-data="lineChartData" />
+    <div class="app-main">
+      <div>
+        <div class="line"><span @click="popupVisible = true">选择能源类别</span></div>
+        <div class="line"><span @click="openPikerDate">选择日期</span></div>
+        <div class="chart-line">
+          <line-chart :chart-data="lineChartData" />
+        </div>
+        <div class="line">
+          <h3>2018年1月企业能耗设计</h3>
+          <h4>能源类别：电(千瓦时)</h4>
+          <h4>起止日期：2018年10月1日-2018年10月31日</h4>
+          <ul class="line-group">
+            <li class="line-box">
+              <div class="line-item">2018年10月1日</div>
+              <div class="line-item big">200千瓦时</div>
+            </li>
+            <li class="line-box">
+              <div class="line-item">2018年10月1日</div>
+              <div class="line-item big">200千瓦时</div>
+            </li>
+            <li class="line-box">
+              <div class="line-item">2018年10月1日</div>
+              <div class="line-item big">200千瓦时</div>
+            </li>
+            <li class="line-box">
+              <div class="line-item">2018年10月1日</div>
+              <div class="line-item big">200千瓦时</div>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="line">
-        <h3>2018年1月企业能耗设计</h3>
-        <h4>能源类别：电(千瓦时)</h4>
-        <h4>起止日期：2018年10月1日-2018年10月31日</h4>
-        <ul class="line-group">
-          <li class="line-box">
-            <div class="line-item">2018年10月1日</div>
-            <div class="line-item big">200千瓦时</div>
-          </li>
-          <li class="line-box">
-            <div class="line-item">2018年10月1日</div>
-            <div class="line-item big">200千瓦时</div>
-          </li>
-          <li class="line-box">
-            <div class="line-item">2018年10月1日</div>
-            <div class="line-item big">200千瓦时</div>
-          </li>
-          <li class="line-box">
-            <div class="line-item">2018年10月1日</div>
-            <div class="line-item big">200千瓦时</div>
-          </li>
-        </ul>
-      </div>
-    </section>
+    </div>
     <mt-popup
       class="type-picker"
       v-model="popupVisible"

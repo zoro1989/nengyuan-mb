@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div ref="loginForm" class="login-form">
-      <h3 class="title">能源管理系统</h3>
+      <h3 class="title">能源管理系统1</h3>
       <div class="el-form-item">
         <span class="svg-container">
           <svg-icon icon-class="user" />
