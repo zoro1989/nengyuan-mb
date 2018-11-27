@@ -1,23 +1,42 @@
 <template>
   <div class="overview">
-    <mt-header fixed title="能源总览">
+    <mt-header fixed title="实时监测">
       <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
       <mt-button icon="more" slot="right" @click="popupVisible = true"></mt-button>
     </mt-header>
     <section class="app-main">
-      <div class="line"><h2>2018年10月企业能源消耗总览</h2></div>
+      <div class="line"><h2>空调设备可视化管理看板</h2></div>
       <div class="line"><span @click="openPiker">选择日期</span></div>
       <div class="line">
-        <h3>企业能源消耗总量</h3>
-        <div class="line-item">上月能源总消费量：1000吨标煤</div>
-        <div class="line-item">电量：800千瓦时</div>
-        <div class="line-item">水量：10吨</div>
-        <div class="line-item">压缩空气：10立方米</div>
-        <div class="line-item">高温水：100吉焦</div>
-        <div class="line-item">天然气：8立方米</div>
+        <h3>三相电流</h3>
+        <h4>起止日期：2018年10月1日-2018年10月31日</h4>
+        <line-chart :chart-data="lineChartData" />
       </div>
-      <div class="chart-line">
-        <pie-chart />
+      <div class="line">
+        <h3>状态</h3>
+        <div class="line-item">额定电流le：200A</div>
+        <div class="line-item">额定功率Pe</div>
+        <div class="line-item">Imax</div>
+        <div class="line-item">Iave</div>
+        <div class="line-item">Imin</div>
+        <div class="line-item">Pmax</div>
+        <div class="line-item">Pave</div>
+        <div class="line-item">Pmin</div>
+        <div class="line-item switch"><mt-switch v-model="isOpen">开关</mt-switch></div>
+      </div>
+      <div class="flexable">
+        <div class="line">
+          <h3>峰值</h3>
+          <div class="line-item">昨天：<span>200</span></div>
+          <div class="line-item">今天：<span>200</span></div>
+          <div class="line-item">对比：<span>200</span></div>
+        </div>
+        <div class="line">
+          <h3>谷值</h3>
+          <div class="line-item">昨天：<span>200</span></div>
+          <div class="line-item">今天：<span>200</span></div>
+          <div class="line-item">对比：<span>200</span></div>
+        </div>
       </div>
     </section>
     <mt-datetime-picker
@@ -46,16 +65,36 @@
   </div>
 </template>
 <script>
-import PieChart from 'components/Chart/PieChart'
+import LineChart from 'components/Chart/LineChart'
 import { clearToken } from '@/common/js/cache'
+const lineChartData = {
+  newVisitis: {
+    expectedData: [100, 120, 161, 134, 105, 160, 165],
+    actualData: [120, 82, 91, 154, 162, 140, 145]
+  },
+  messages: {
+    expectedData: [200, 192, 120, 144, 160, 130, 140],
+    actualData: [180, 160, 151, 106, 145, 150, 130]
+  },
+  purchases: {
+    expectedData: [80, 100, 121, 104, 105, 90, 100],
+    actualData: [120, 90, 100, 138, 142, 130, 130]
+  },
+  shoppings: {
+    expectedData: [130, 140, 141, 142, 145, 150, 160],
+    actualData: [120, 82, 91, 154, 162, 140, 130]
+  }
+}
 export default {
   components: {
-    PieChart
+    LineChart
   },
   data() {
     return {
       pickerValue: '',
-      popupVisible: false
+      popupVisible: false,
+      isOpen: true,
+      lineChartData: lineChartData.newVisitis
     }
   },
   methods: {
@@ -79,6 +118,15 @@ export default {
         background: #fff
         padding-top: 15px
         min-height: calc(100vh - 340px)
+      .flexable
+        display: flex
+        .line
+          flex: 1
+          margin-bottom: 0px
+          &:nth-child(1)
+            margin-right: 5px
+          &:nth-child(2)
+            margin-left: 5px
       .line
         padding: 10px
         box-sizing: border-box
@@ -87,10 +135,15 @@ export default {
         .line-item
           height: 20px
           line-height: 20px
+          &.switch
+            margin: 10px 0
         h2
           font-size: 18px
         h3
           font-size: 16px
+        h4
+          height: 20px
+          line-height: 20px
         h2, h3
           color: rgb(48, 65, 86)
           padding: 5px 0

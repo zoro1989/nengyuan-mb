@@ -26,6 +26,36 @@ export default new Router({
           path: 'overview',
           name: 'overview',
           component: () => import('@/views/overview/index')
+        },
+        {
+          path: 'enterprise',
+          name: 'enterprise',
+          component: () => import('@/views/enterprise/index')
+        },
+        {
+          path: 'workshop',
+          name: 'workshop',
+          component: () => import('@/views/workshop/index')
+        },
+        {
+          path: 'device',
+          name: 'device',
+          component: () => import('@/views/device/index')
+        },
+        {
+          path: 'indicator',
+          name: 'indicator',
+          component: () => import('@/views/indicator/index')
+        },
+        {
+          path: 'realtime',
+          name: 'realtime',
+          component: () => import('@/views/realtime/index')
+        },
+        {
+          path: 'warning',
+          name: 'warning',
+          component: () => import('@/views/warning/index')
         }
       ]
     }
