@@ -78,7 +78,7 @@ export default {
             name: 'WEEKLY WRITE ARTICLES',
             type: 'pie',
             // roseType: 'radius',
-            radius: [15, 95],
+            radius: ['15%', '55%'],
             center: ['50%', '38%'],
             data: [
               { value: 320, name: '电' },

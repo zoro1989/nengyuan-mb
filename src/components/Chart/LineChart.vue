@@ -19,7 +19,7 @@ export default {
     },
     height: {
       type: String,
-      default: '300px'
+      default: '250px'
     },
     autoResize: {
       type: Boolean,
@@ -89,7 +89,7 @@ export default {
         },
         grid: {
           left: 10,
-          right: 10,
+          right: 25,
           bottom: 20,
           top: 30,
           containLabel: true
