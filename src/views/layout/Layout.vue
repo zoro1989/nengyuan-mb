@@ -1,12 +1,10 @@
 <template>
   <div class="app-wrapper">
-    <div class="main-container">
-      <transition name="fade-transform" mode="out-in">
-        <keep-alive>
-          <router-view :key="key"/>
-        </keep-alive>
-      </transition>
-    </div>
+    <transition name="fade-transform" mode="out-in">
+      <keep-alive>
+        <router-view :key="key"/>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="overview">
+  <div class="main-container">
     <mt-header fixed title="能源总览">
       <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
       <mt-button icon="more" slot="right" @click="popupVisible = true"></mt-button>
@@ -75,7 +75,7 @@ export default {
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  .overview
+  .main-container
     .app-main
       .chart-line
         background: #fff

@@ -1,5 +1,5 @@
 <template>
-  <div class="enterprise">
+  <div class="main-container">
     <mt-header fixed title="企业用电量">
       <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
     </mt-header>
@@ -105,7 +105,7 @@ export default {
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  .enterprise
+  .main-container
     .app-main
       .chart-line
         background: #fff

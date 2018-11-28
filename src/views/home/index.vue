@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="main-container">
     <mt-header fixed title="成都变电室远程监控">
       <mt-button slot="right" @click="logout" class="icon-button">
         <svg-icon icon-class="logout" style="font-size: 18px" slot="icon" />
@@ -94,7 +94,8 @@ export default {
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  .home
+  .main-container
+    height: 100%
     .card-box
       display: flex
       .card-panel
