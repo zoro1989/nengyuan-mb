@@ -5,11 +5,16 @@ import router from './router'
 import VueCorvova from 'vue-cordova'
 import '@/common/icons' // icon
 import '@/common/js/permission' // permission control
-
 import fastclick from 'fastclick'
 import 'common/stylus/index.styl'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
+
+/* eslint-disable no-unused-vars */
+import VConsole from 'vconsole'
+/* eslint-disable no-new */
+new VConsole()
+
 Vue.use(MintUI)
 Vue.use(VueCorvova)
 Vue.config.productionTip = false
@@ -20,3 +25,19 @@ new Vue({
   router,
   render: h => h(App)
 })
+document.addEventListener('jpush.receiveRegistrationId', function (event) {
+  console.log(event.registrationId)
+}, false)
+window.JPush.init()
+window.JPush.setDebugMode(true)
+document.addEventListener('jpush.openNotification', function (event) {
+  let alertContent = ''
+  if (window.device.platform === 'Android') {
+    alertContent = event.alert
+  } else {
+    alertContent = event.aps.alert
+  }
+  alert(alertContent)
+  console.log(alertContent)
+  router.push('/warning')
+}, false)
