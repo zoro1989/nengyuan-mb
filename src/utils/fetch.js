@@ -22,8 +22,8 @@ let fetch = (type, url, params, isFormData = true, showMessage = false) => {
 
   service.interceptors.response.use(response => {
     // 如果服务器出错，做出相应的处理，response.data后面的内容根据后端接口修改
-    let res = response.data
-    if (res.code !== apiStatus.success) {
+    let res = JSON.parse(response.data.d)
+    if (res.status && res.status !== apiStatus.success) {
       if (url !== 'login' && res.result === '401') {
         router.push('/login')
       }

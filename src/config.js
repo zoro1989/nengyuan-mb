@@ -1,12 +1,14 @@
 // let apiPath = '/api/';
 // let apiPath = 'http://47.95.14.172:8088/web/';
 // let apiPath = 'http://rancode.jymenu.com/';
-let apiPath = 'https://easy-mock.com/mock/5950a2419adc231f356a6636/vue-admin'
-// let apiPath = '/'
+let apiPath = 'app/'
 const api = {
-  userLogin: apiPath + '/user/login',
-  userInfo: apiPath + '/user/info',
-  userLogout: apiPath + '/user/logout'
+  // 能源总览
+  EntMainIndexchart: apiPath + 'EntMain.aspx/indexchart',
+  EntMainIndextable: apiPath + 'EntMain.aspx/indextable',
+  // 企业用电量
+  EntElectricIndexchart: apiPath + 'EntElectric.aspx/indexchart',
+  EntElectricIndextable: apiPath + 'EntElectric.aspx/indextable'
 }
 
 const apiDict = {
@@ -14,7 +16,7 @@ const apiDict = {
 }
 
 const apiStatus = {
-  success: 20000
+  success: '0'
 }
 
 export { api, apiDict, apiStatus }

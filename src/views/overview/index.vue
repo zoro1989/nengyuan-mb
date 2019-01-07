@@ -6,19 +6,14 @@
     </mt-header>
     <div class="app-main">
       <div>
-        <div class="line"><h2>2018年10月企业能源消耗总览</h2></div>
-        <div class="line"><span @click="openPiker">选择日期</span></div>
+        <div class="line"><h2>{{dispDate}}企业能源消耗总览</h2></div>
+        <div class="line"><span @click="openPiker">{{dispDate}}</span></div>
         <div class="line">
           <h3>企业能源消耗总量</h3>
-          <div class="line-item">上月能源总消费量：1000吨标煤</div>
-          <div class="line-item">电量：800千瓦时</div>
-          <div class="line-item">水量：10吨</div>
-          <div class="line-item">压缩空气：10立方米</div>
-          <div class="line-item">高温水：100吉焦</div>
-          <div class="line-item">天然气：8立方米</div>
+          <div class="line-item" v-for="(item, index) in tableData.seriesData" :key="index">{{item.name}}：{{item.value}}{{item.unit}}</div>
         </div>
         <div class="chart-line">
-          <pie-chart />
+          <pie-chart :legendData="pie.legendData" :seriesData="pie.seriesData" :titleText="pie.titleText"/>
         </div>
       </div>
     </div>
@@ -27,6 +22,7 @@
       v-model="pickerValue"
       type="date"
       ref="picker"
+      @confirm="dateConfirm"
       year-format="{value} 年"
       month-format="{value} 月"
       date-format="{value} 日">
@@ -50,17 +46,41 @@
 <script>
 import PieChart from 'components/Chart/PieChart'
 import { clearToken } from '@/common/js/cache'
+import { api } from '@/config'
+import fetch from 'utils/fetch'
+let moment = require('moment')
+moment.locale('zh-cn')
 export default {
   components: {
     PieChart
   },
+  created() {
+    this.initData()
+  },
   data() {
     return {
-      pickerValue: '',
-      popupVisible: false
+      pickerValue: (new Date()),
+      popupVisible: false,
+      pie: {},
+      tableData: {}
+    }
+  },
+  computed: {
+    dispDate() {
+      return moment(this.pickerValue).format('YYYY年MM月')
     }
   },
   methods: {
+    initData() {
+      fetch('post', api.EntMainIndexchart, {date: moment(this.pickerValue).format('YYYY-MM')}, false).then((res) => {
+        this.pie = res.data.pie
+      }).catch(() => {
+      })
+      fetch('post', api.EntMainIndextable, {date: moment(this.pickerValue).format('YYYY-MM')}, false).then((res) => {
+        this.tableData = res.data.pie
+      }).catch(() => {
+      })
+    },
     openPiker() {
       this.$refs.picker.open()
     },
@@ -70,6 +90,9 @@ export default {
     logout() {
       clearToken()
       location.reload()
+    },
+    dateConfirm() {
+      this.initData()
     }
   }
 }

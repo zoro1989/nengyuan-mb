@@ -24,6 +24,22 @@ export default {
     autoResize: {
       type: Boolean,
       default: true
+    },
+    legendData: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    seriesData: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    titleText: {
+      type: String,
+      default: '300px'
     }
   },
   data() {
@@ -32,14 +48,19 @@ export default {
       sidebarElm: null
     }
   },
-  mounted() {
-    this.initChart()
-    this.__resizeHandler = debounce(() => {
-      if (this.chart) {
-        this.chart.resize()
-      }
-    }, 100)
-    window.addEventListener('resize', this.__resizeHandler)
+  watch: {
+    seriesData: function () {
+      clearTimeout(this.timer)
+      this.timer = setTimeout(() => {
+        this.initChart()
+        this.__resizeHandler = debounce(() => {
+          if (this.chart) {
+            this.chart.resize()
+          }
+        }, 100)
+        window.addEventListener('resize', this.__resizeHandler)
+      }, 20)
+    }
   },
   beforeDestroy() {
     if (!this.chart) {
@@ -54,11 +75,6 @@ export default {
     this.chart = null
   },
   methods: {
-    sidebarResizeHandler(e) {
-      if (e.propertyName === 'width') {
-        this.__resizeHandler()
-      }
-    },
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
 
@@ -70,23 +86,21 @@ export default {
         legend: {
           left: 'center',
           bottom: '10',
-          data: ['电', '水', '压缩空气', '高温水', '天然气']
+          data: this.legendData
+        },
+        title: {
+          text: this.titleText,
+          x: 'center'
         },
         calculable: true,
         series: [
           {
-            name: 'WEEKLY WRITE ARTICLES',
             type: 'pie',
+            name: this.titleText,
             // roseType: 'radius',
             radius: ['15%', '55%'],
-            center: ['50%', '38%'],
-            data: [
-              { value: 320, name: '电' },
-              { value: 240, name: '水' },
-              { value: 149, name: '压缩空气' },
-              { value: 100, name: '高温水' },
-              { value: 59, name: '天然气' }
-            ],
+            center: ['50%', '50%'],
+            data: this.seriesData,
             animationEasing: 'cubicInOut',
             animationDuration: 2600
           }

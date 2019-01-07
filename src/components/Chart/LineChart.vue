@@ -25,39 +25,49 @@ export default {
       type: Boolean,
       default: true
     },
-    chartData: {
-      type: Object,
-      required: true
+    legendData: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    xAxisData: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    seriesData: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    titleText: {
+      type: String,
+      default: '300px'
     }
   },
   data() {
     return {
       chart: null,
-      sidebarElm: null
+      sidebarElm: null,
+      chartColor: ['#FF005A', '#3888fa']
     }
   },
   watch: {
-    chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val)
-      }
+    seriesData: function () {
+      clearTimeout(this.timer)
+      this.timer = setTimeout(() => {
+        this.initChart()
+        this.__resizeHandler = debounce(() => {
+          if (this.chart) {
+            this.chart.resize()
+          }
+        }, 100)
+        window.addEventListener('resize', this.__resizeHandler)
+      }, 20)
     }
-  },
-  mounted() {
-    this.initChart()
-    if (this.autoResize) {
-      this.__resizeHandler = debounce(() => {
-        if (this.chart) {
-          this.chart.resize()
-        }
-      }, 100)
-      window.addEventListener('resize', this.__resizeHandler)
-    }
-
-    // 监听侧边栏的变化
-    this.sidebarElm = document.getElementsByClassName('sidebar-container')[0]
-    this.sidebarElm && this.sidebarElm.addEventListener('transitionend', this.sidebarResizeHandler)
   },
   beforeDestroy() {
     if (!this.chart) {
@@ -73,15 +83,11 @@ export default {
     this.chart = null
   },
   methods: {
-    sidebarResizeHandler(e) {
-      if (e.propertyName === 'width') {
-        this.__resizeHandler()
-      }
-    },
-    setOptions({ expectedData, actualData } = {}) {
+    initChart() {
+      this.chart = echarts.init(this.$el, 'macarons')
       this.chart.setOption({
         xAxis: {
-          data: ['11-01', '11-02', '11-03', '11-04', '11-05', '11-06', '11-07'],
+          data: this.xAxisData,
           boundaryGap: false,
           axisTick: {
             show: false
@@ -107,50 +113,32 @@ export default {
           }
         },
         legend: {
-          data: ['expected', 'actual']
+          data: this.legendData
         },
-        series: [{
-          name: 'expected',
-          itemStyle: {
-            normal: {
-              color: '#FF005A',
-              lineStyle: {
-                color: '#FF005A',
-                width: 2
-              }
-            }
-          },
-          smooth: true,
-          type: 'line',
-          data: expectedData,
-          animationDuration: 2800,
-          animationEasing: 'cubicInOut'
-        },
-        {
-          name: 'actual',
-          smooth: true,
-          type: 'line',
-          itemStyle: {
-            normal: {
-              color: '#3888fa',
-              lineStyle: {
-                color: '#3888fa',
-                width: 2
+        series: ((vm, series) => {
+          let res = []
+          for (let i = 0; i < series.length; i++) {
+            let item = {
+              itemStyle: {
+                normal: {
+                  color: vm.chartColor[i],
+                  lineStyle: {
+                    color: vm.chartColor[i],
+                    width: 2
+                  }
+                }
               },
-              areaStyle: {
-                color: '#f3f8ff'
-              }
+              smooth: true,
+              type: 'line',
+              data: series[i].data,
+              animationDuration: 2800,
+              animationEasing: 'cubicInOut'
             }
-          },
-          data: actualData,
-          animationDuration: 2800,
-          animationEasing: 'quadraticOut'
-        }]
+            res.push(item)
+          }
+          return res
+        })(this, this.seriesData)
       })
-    },
-    initChart() {
-      this.chart = echarts.init(this.$el, 'macarons')
-      this.setOptions(this.chartData)
     }
   }
 }

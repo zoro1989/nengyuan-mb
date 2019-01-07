@@ -11,9 +11,9 @@ import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 
 /* eslint-disable no-unused-vars */
-import VConsole from 'vconsole'
+// import VConsole from 'vconsole'
 /* eslint-disable no-new */
-new VConsole()
+// new VConsole()
 
 Vue.use(MintUI)
 Vue.use(VueCorvova)

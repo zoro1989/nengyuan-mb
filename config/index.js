@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/': {
-        target: 'http://leanv.hk1.tunnelfrp.cc/',
+        target: 'http://2g2836a817.iask.in:13498/',
         changeOrigin: true
       }
     },

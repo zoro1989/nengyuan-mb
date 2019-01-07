@@ -5,31 +5,19 @@
     </mt-header>
     <div class="app-main">
       <div>
-        <div class="line"><span @click="popupVisible = true">选择能源类别</span></div>
-        <div class="line"><span @click="openPikerDate">选择日期</span></div>
+        <div class="line"><span @click="popupVisible = true">{{pickerTypeValue}}</span></div>
+        <div class="line"><span @click="openPikerDate">{{dispDate}}</span></div>
         <div class="chart-line">
-          <line-chart :chart-data="lineChartData" />
+          <line-chart :legendData="lineChartData.legendData" :seriesData="lineChartData.seriesData" :titleText="lineChartData.titleText" :xAxisData="lineChartData.xAxisData" />
         </div>
         <div class="line">
-          <h3>2018年1月企业能耗设计</h3>
-          <h4>能源类别：电(千瓦时)</h4>
-          <h4>起止日期：2018年10月1日-2018年10月31日</h4>
+          <h3>{{dispDate}}企业能耗设计</h3>
+          <h4>能源类别：{{pickerTypeValue}}</h4>
+          <!--<h4>起止日期：2018年10月1日-2018年10月31日</h4>-->
           <ul class="line-group">
-            <li class="line-box">
-              <div class="line-item">2018年10月1日</div>
-              <div class="line-item big">200千瓦时</div>
-            </li>
-            <li class="line-box">
-              <div class="line-item">2018年10月1日</div>
-              <div class="line-item big">200千瓦时</div>
-            </li>
-            <li class="line-box">
-              <div class="line-item">2018年10月1日</div>
-              <div class="line-item big">200千瓦时</div>
-            </li>
-            <li class="line-box">
-              <div class="line-item">2018年10月1日</div>
-              <div class="line-item big">200千瓦时</div>
+            <li class="line-box" v-for="(item, index) in listData" :key="index">
+              <div class="line-item">{{item.date}}</div>
+              <div class="line-item big">{{computedData(item)}}</div>
             </li>
           </ul>
         </div>
@@ -39,13 +27,17 @@
       class="type-picker"
       v-model="popupVisible"
       position="bottom">
-      <mt-picker :slots="slots" ref="pickerType" v-model="pickerTypeValue"></mt-picker>
+      <mt-picker :slots="slots" ref="pickerType" :showToolbar="true" v-model="pickerTypeValue" @change="onValuesChange">
+        <span class="mint-datetime-action mint-datetime-cancel" @click="popupVisible = false">取消</span>
+        <span class="mint-datetime-action mint-datetime-confirm" @click="lxConfirm">确认</span>
+      </mt-picker>
     </mt-popup>
     <mt-datetime-picker
       class="only-month"
       v-model="pickerDateValue"
       type="date"
       ref="pickerDate"
+      @confirm="dateConfirm"
       year-format="{value} 年"
       month-format="{value} 月"
       date-format="{value} 日">
@@ -54,44 +46,83 @@
 </template>
 <script>
 import LineChart from 'components/Chart/LineChart'
-const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
-  },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
-  },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
-  },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
-  }
-}
+import { api } from '@/config'
+import fetch from 'utils/fetch'
+let moment = require('moment')
+moment.locale('zh-cn')
 export default {
   components: {
     LineChart
   },
+  created() {
+    this.initData()
+  },
   data() {
     return {
-      pickerDateValue: '',
-      pickerTypeValue: '',
+      pickerDateValue: (new Date()),
+      pickerTypeValue: '电',
       popupVisible: false,
       slots: [
         {
           flex: 1,
-          values: ['电', '水', '天然气', '热力', '煤'],
+          values: ['水', '电', '天然气', '压缩空气', '高温水', '综合能耗'],
           textAlign: 'center'
         }
       ],
-      lineChartData: lineChartData.newVisitis
+      lineChartData: [],
+      listData: []
+    }
+  },
+  computed: {
+    dispDate() {
+      return moment(this.pickerValue).format('YYYY年MM月')
+    },
+    energyid() {
+      if (this.pickerTypeValue === '水') {
+        return '1'
+      } else if (this.pickerTypeValue === '电') {
+        return '2'
+      } else if (this.pickerTypeValue === '天然气') {
+        return '3'
+      } else if (this.pickerTypeValue === '压缩空气') {
+        return '4'
+      } else if (this.pickerTypeValue === '高温水') {
+        return '5'
+      } else if (this.pickerTypeValue === '综合能耗') {
+        return '6'
+      } else {
+        return '2'
+      }
     }
   },
   methods: {
+    initData() {
+      fetch('post', api.EntElectricIndexchart, {date: moment(this.pickerValue).format('YYYY-MM'), energyid: this.energyid}, false).then((res) => {
+        this.lineChartData = res.data.line
+      }).catch(() => {
+      })
+      fetch('post', api.EntElectricIndextable, {date: moment(this.pickerValue).format('YYYY-MM'), energyid: this.energyid}, false).then((res) => {
+        this.listData = res.data.list
+      }).catch(() => {
+      })
+    },
+    computedData(item) {
+      if (this.pickerTypeValue === '水') {
+        return item['shui']
+      } else if (this.pickerTypeValue === '电') {
+        return item['dian']
+      } else if (this.pickerTypeValue === '天然气') {
+        return item['trq']
+      } else if (this.pickerTypeValue === '压缩空气') {
+        return item['yskq']
+      } else if (this.pickerTypeValue === '高温水') {
+        return item['gws']
+      } else if (this.pickerTypeValue === '综合能耗') {
+        return item['zhnh']
+      } else {
+        return item['dian']
+      }
+    },
     openPikerDate() {
       this.$refs.pickerDate.open()
     },
@@ -100,6 +131,16 @@ export default {
     },
     goBack() {
       this.$router.go(-1)
+    },
+    onValuesChange(picker, values) {
+      this.pickerTypeValue = values[0]
+    },
+    dateConfirm() {
+      this.initData()
+    },
+    lxConfirm() {
+      this.popupVisible = false
+      this.initData()
     }
   }
 }
