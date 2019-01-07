@@ -2,16 +2,14 @@
   <div class="main-container">
     <mt-header fixed title="实时监测">
       <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
-      <mt-button icon="more" slot="right" @click="popupVisible = true"></mt-button>
     </mt-header>
     <div class="app-main">
       <div>
         <div class="line"><h2>空调设备可视化管理看板</h2></div>
-        <div class="line"><span @click="openPiker">选择日期</span></div>
+        <div class="line"><span @click="popupVisible = true">{{pickerTypeValue}}</span></div>
         <div class="line">
           <h3>三相电流</h3>
-          <h4>起止日期：2018年10月1日-2018年10月31日</h4>
-          <line-chart :chart-data="lineChartData" />
+          <line-chart :legendData="lineChartData.legendData" :seriesData="lineChartData.seriesData" :titleText="lineChartData.titleText" :xAxisData="lineChartData.xAxisData" />
         </div>
         <div class="line">
           <h3>状态</h3>
@@ -41,74 +39,97 @@
         </div>
       </div>
     </div>
-    <mt-datetime-picker
-      class="only-month"
-      v-model="pickerValue"
-      type="date"
-      ref="picker"
-      year-format="{value} 年"
-      month-format="{value} 月"
-      date-format="{value} 日">
-    </mt-datetime-picker>
     <mt-popup
-      class="menu-pop"
+      class="type-picker"
       v-model="popupVisible"
-      position="right">
-      <ul class="menu-box">
-        <li class="menu-item"><svg-icon icon-class="sum" />企业能源消耗总量</li>
-        <li class="menu-item"><svg-icon icon-class="electric" />企业电量</li>
-        <li class="menu-item"><svg-icon icon-class="water" />企业水量</li>
-        <li class="menu-item"><svg-icon icon-class="air" />企业压缩空气量</li>
-        <li class="menu-item"><svg-icon icon-class="heightemp" />企业高温水量</li>
-        <li class="menu-item"><svg-icon icon-class="gas" />企业天然气量</li>
-        <li class="menu-item logout" @click="logout">退出登录</li>
-      </ul>
+      position="bottom">
+      <mt-picker :slots="slots" ref="pickerType" :showToolbar="true" v-model="pickerTypeValue" @change="onValuesChange">
+        <span class="mint-datetime-action mint-datetime-cancel" @click="popupVisible = false">取消</span>
+        <span class="mint-datetime-action mint-datetime-confirm" @click="lxConfirm">确认</span>
+      </mt-picker>
     </mt-popup>
   </div>
 </template>
 <script>
 import LineChart from 'components/Chart/LineChart'
-import { clearToken } from '@/common/js/cache'
-const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
-  },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
-  },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
-  },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
-  }
-}
+import { api } from '@/config'
+import fetch from 'utils/fetch'
+let moment = require('moment')
+moment.locale('zh-cn')
 export default {
   components: {
     LineChart
   },
+  created() {
+    this.initData()
+  },
   data() {
     return {
-      pickerValue: '',
+      pickerDateValue: (new Date()),
+      pickerTypeValue: '暖通机组AP11',
       popupVisible: false,
-      isOpen: true,
-      lineChartData: lineChartData.newVisitis
+      slots: [
+        {
+          flex: 1,
+          values: ['暖通机组AP11', '暖通机组AP12', '暖通机组AP13', '制冷剂补水', '空压站'],
+          textAlign: 'center'
+        }
+      ],
+      lineChartData: [],
+      listData: [],
+      isOpen: true
+    }
+  },
+  computed: {
+    dispDate() {
+      return moment(this.pickerValue).format('YYYY年MM月')
+    },
+    syscode() {
+      if (this.pickerTypeValue === '暖通机组AP11') {
+        return 'DB4009'
+      } else if (this.pickerTypeValue === '暖通机组AP12') {
+        return 'DB4010'
+      } else if (this.pickerTypeValue === '暖通机组AP13') {
+        return 'DB4011'
+      } else if (this.pickerTypeValue === '制冷剂补水') {
+        return 'DB4012'
+      } else if (this.pickerTypeValue === '空压站') {
+        return 'DB4023'
+      } else {
+        return 'DB4009'
+      }
     }
   },
   methods: {
-    openPiker() {
-      this.$refs.picker.open()
+    initData() {
+      fetch('post', api.SSContorlIndexchart, {date: moment(this.pickerValue).format('YYYY-MM'), syscode: this.syscode}, false).then((res) => {
+        this.lineChartData = res.data.line
+        console.log(this.lineChartData)
+      }).catch(() => {
+      })
+      fetch('post', api.SSContorlIndextable, {date: moment(this.pickerValue).format('YYYY-MM'), syscode: this.syscode}, false).then((res) => {
+        this.listData = res.data.list
+      }).catch(() => {
+      })
+    },
+    openPikerDate() {
+      this.$refs.pickerDate.open()
+    },
+    openPikerType() {
+      this.$refs.pickerType.open()
     },
     goBack() {
       this.$router.go(-1)
     },
-    logout() {
-      clearToken()
-      location.reload()
+    onValuesChange(picker, values) {
+      this.pickerTypeValue = values[0]
+    },
+    dateConfirm() {
+      this.initData()
+    },
+    lxConfirm() {
+      this.popupVisible = false
+      this.initData()
     }
   }
 }

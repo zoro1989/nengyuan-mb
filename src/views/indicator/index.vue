@@ -160,13 +160,17 @@
       class="type-picker"
       v-model="popupVisible"
       position="bottom">
-      <mt-picker :slots="slots" ref="pickerType" v-model="pickerTypeValue"></mt-picker>
+      <mt-picker :slots="slots" ref="pickerType" :showToolbar="true" v-model="pickerTypeValue" @change="onValuesChange">
+        <span class="mint-datetime-action mint-datetime-cancel" @click="popupVisible = false">取消</span>
+        <span class="mint-datetime-action mint-datetime-confirm" @click="lxConfirm">确认</span>
+      </mt-picker>
     </mt-popup>
     <mt-datetime-picker
       class="only-month"
       v-model="pickerDateValue"
       type="date"
       ref="pickerDate"
+      @confirm="dateConfirm"
       year-format="{value} 年"
       month-format="{value} 月"
       date-format="{value} 日">
@@ -175,44 +179,66 @@
 </template>
 <script>
 import LineChart from 'components/Chart/LineChart'
-const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
-  },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
-  },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
-  },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
-  }
-}
+import { api } from '@/config'
+import fetch from 'utils/fetch'
+let moment = require('moment')
+moment.locale('zh-cn')
 export default {
   components: {
     LineChart
   },
+  created() {
+    this.initData()
+  },
   data() {
     return {
-      pickerDateValue: '',
-      pickerTypeValue: '',
+      pickerDateValue: (new Date()),
+      pickerTypeValue: '能源消耗总量',
       popupVisible: false,
       slots: [
         {
           flex: 1,
-          values: ['电', '水', '天然气', '热力', '煤'],
+          values: ['能源消耗总量', '万元产值综合能耗', '万元产值电耗', '万元产值水耗', '万元产值天然气耗', '万元产值高温水耗'],
           textAlign: 'center'
         }
       ],
-      lineChartData: lineChartData.newVisitis
+      lineChartData: [],
+      listData: []
+    }
+  },
+  computed: {
+    dispDate() {
+      return moment(this.pickerValue).format('YYYY年MM月')
+    },
+    energytype() {
+      if (this.pickerTypeValue === '能源消耗总量') {
+        return '1'
+      } else if (this.pickerTypeValue === '万元产值综合能耗') {
+        return '2'
+      } else if (this.pickerTypeValue === '万元产值电耗') {
+        return '3'
+      } else if (this.pickerTypeValue === '万元产值水耗') {
+        return '4'
+      } else if (this.pickerTypeValue === '万元产值天然气耗') {
+        return '5'
+      } else if (this.pickerTypeValue === '万元产值高温水耗') {
+        return '6'
+      } else {
+        return '1'
+      }
     }
   },
   methods: {
+    initData() {
+      fetch('post', api.EntTotalIndexchart, {date: moment(this.pickerValue).format('YYYY-MM'), energytype: this.energytype}, false).then((res) => {
+        console.log(res.data)
+      }).catch(() => {
+      })
+      fetch('post', api.EntTotalIndextable, {date: moment(this.pickerValue).format('YYYY-MM'), energytype: this.energytype}, false).then((res) => {
+        console.log(res.data)
+      }).catch(() => {
+      })
+    },
     openPikerDate() {
       this.$refs.pickerDate.open()
     },
@@ -221,6 +247,16 @@ export default {
     },
     goBack() {
       this.$router.go(-1)
+    },
+    onValuesChange(picker, values) {
+      this.pickerTypeValue = values[0]
+    },
+    dateConfirm() {
+      this.initData()
+    },
+    lxConfirm() {
+      this.popupVisible = false
+      this.initData()
     }
   }
 }

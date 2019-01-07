@@ -26,6 +26,10 @@
 <script>
 import LineChart from 'components/Chart/LineChart'
 import { clearToken } from '@/common/js/cache'
+import { api } from '@/config'
+import fetch from 'utils/fetch'
+let moment = require('moment')
+moment.locale('zh-cn')
 const lineChartData = {
   newVisitis: {
     expectedData: [100, 120, 161, 134, 105, 160, 165],
@@ -48,6 +52,9 @@ export default {
   components: {
     LineChart
   },
+  created() {
+    this.initData()
+  },
   data() {
     return {
       pickerValue: '',
@@ -57,6 +64,12 @@ export default {
     }
   },
   methods: {
+    initData() {
+      fetch('post', api.AlermAppIndextable, {}, false).then((res) => {
+        console.log(this.lineChartData)
+      }).catch(() => {
+      })
+    },
     openPiker() {
       this.$refs.picker.open()
     },

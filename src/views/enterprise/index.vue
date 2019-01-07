@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <mt-header fixed title="企业用电量">
+    <mt-header fixed :title="'企业用' + pickerTypeValue + '量'">
       <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
     </mt-header>
     <div class="app-main">
@@ -11,7 +11,7 @@
           <line-chart :legendData="lineChartData.legendData" :seriesData="lineChartData.seriesData" :titleText="lineChartData.titleText" :xAxisData="lineChartData.xAxisData" />
         </div>
         <div class="line">
-          <h3>{{dispDate}}企业能耗设计</h3>
+          <h3>{{dispDate}}企业能耗统计</h3>
           <h4>能源类别：{{pickerTypeValue}}</h4>
           <!--<h4>起止日期：2018年10月1日-2018年10月31日</h4>-->
           <ul class="line-group">

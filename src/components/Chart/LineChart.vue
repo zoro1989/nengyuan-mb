@@ -128,8 +128,9 @@ export default {
                   }
                 }
               },
+              name: series[i].name,
               smooth: true,
-              type: 'line',
+              type: series[i].type || 'line',
               data: series[i].data,
               animationDuration: 2800,
               animationEasing: 'cubicInOut'
