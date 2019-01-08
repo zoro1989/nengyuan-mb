@@ -10,7 +10,7 @@
         <div class="line"><span @click="openPiker">{{dispDate}}</span></div>
         <div class="line">
           <h3>企业能源消耗总量</h3>
-          <div class="line-item" v-for="(item, index) in tableData.seriesData" :key="index">{{item.name}}：{{item.value}}{{item.unit}}</div>
+          <div class="line-item" v-for="(item, index) in dataList" :key="index">{{item.cjname}}：{{item.cjyl}}{{item.unit}}</div>
         </div>
         <div class="chart-line">
           <pie-chart :legendData="pie.legendData" :seriesData="pie.seriesData" :titleText="pie.titleText"/>
@@ -32,12 +32,12 @@
       v-model="popupVisible"
       position="right">
       <ul class="menu-box">
-        <li class="menu-item"><svg-icon icon-class="sum" />企业能源消耗总量</li>
-        <li class="menu-item"><svg-icon icon-class="electric" />企业电量</li>
-        <li class="menu-item"><svg-icon icon-class="water" />企业水量</li>
-        <li class="menu-item"><svg-icon icon-class="air" />企业压缩空气量</li>
-        <li class="menu-item"><svg-icon icon-class="heightemp" />企业高温水量</li>
-        <li class="menu-item"><svg-icon icon-class="gas" />企业天然气量</li>
+        <li class="menu-item"><svg-icon icon-class="sum" @click="changeType('6')" />企业能源消耗总量</li>
+        <li class="menu-item"><svg-icon icon-class="water" @click="changeType('1')" />企业水量</li>
+        <li class="menu-item"><svg-icon icon-class="electric" @click="changeType('2')" />企业电量</li>
+        <li class="menu-item"><svg-icon icon-class="gas" @click="changeType('3')" />企业天然气量</li>
+        <li class="menu-item"><svg-icon icon-class="air" @click="changeType('4')" />企业压缩空气量</li>
+        <li class="menu-item"><svg-icon icon-class="heightemp" @click="changeType('5')" />企业高温水量</li>
         <li class="menu-item logout" @click="logout">退出登录</li>
       </ul>
     </mt-popup>
@@ -62,7 +62,8 @@ export default {
       pickerValue: (new Date()),
       popupVisible: false,
       pie: {},
-      tableData: {}
+      dataList: [],
+      energytype: '6'
     }
   },
   computed: {
@@ -72,12 +73,12 @@ export default {
   },
   methods: {
     initData() {
-      fetch('post', api.EntMainIndexchart, {date: moment(this.pickerValue).format('YYYY-MM')}, false).then((res) => {
+      fetch('post', api.EntMainIndexchart, {date: moment(this.pickerValue).format('YYYY-MM'), energytype: this.energytype}, false).then((res) => {
         this.pie = res.data.pie
       }).catch(() => {
       })
-      fetch('post', api.EntMainIndextable, {date: moment(this.pickerValue).format('YYYY-MM')}, false).then((res) => {
-        this.tableData = res.data.pie
+      fetch('post', api.EntMainIndextable, {date: moment(this.pickerValue).format('YYYY-MM'), energytype: this.energytype}, false).then((res) => {
+        this.dataList = res.dataList
       }).catch(() => {
       })
     },
@@ -92,6 +93,10 @@ export default {
       location.reload()
     },
     dateConfirm() {
+      this.initData()
+    },
+    changeType(type) {
+      this.energytype = type
       this.initData()
     }
   }

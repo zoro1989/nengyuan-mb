@@ -6,6 +6,7 @@
     <div class="app-main">
       <div>
         <div class="line"><span @click="popupVisible = true">{{pickerTypeValue}}</span></div>
+        <div class="line"><span @click="popupVisibleDev = true">{{pickerDevValue}}</span></div>
         <div class="line"><span @click="openPikerDate">{{dispDate}}</span></div>
         <div class="chart-line">
           <line-chart :legendData="lineChartData.legendData" :seriesData="lineChartData.seriesData" :titleText="lineChartData.titleText" :xAxisData="lineChartData.xAxisData" />
@@ -16,8 +17,8 @@
           <!--<h4>起止日期：2018年10月1日-2018年10月31日</h4>-->
           <ul class="line-group">
             <li class="line-box" v-for="(item, index) in listData" :key="index">
-              <div class="line-item">{{item.date}}</div>
-              <div class="line-item big">{{computedData(item)}}</div>
+              <div class="line-item">日期：{{item.date}}</div>
+              <div class="line-item big">用量：{{computedData(item)}}</div>
             </li>
           </ul>
         </div>
@@ -30,6 +31,15 @@
       <mt-picker :slots="slots" ref="pickerType" :showToolbar="true" v-model="pickerTypeValue" @change="onValuesChange">
         <span class="mint-datetime-action mint-datetime-cancel" @click="popupVisible = false">取消</span>
         <span class="mint-datetime-action mint-datetime-confirm" @click="lxConfirm">确认</span>
+      </mt-picker>
+    </mt-popup>
+    <mt-popup
+      class="type-picker"
+      v-model="popupVisibleDev"
+      position="bottom">
+      <mt-picker :slots="slotsDev" ref="pickerDev" :showToolbar="true" v-model="pickerDevValue" @change="onValuesChangeDev">
+        <span class="mint-datetime-action mint-datetime-cancel" @click="popupVisibleDev = false">取消</span>
+        <span class="mint-datetime-action mint-datetime-confirm" @click="devConfirm">确认</span>
       </mt-picker>
     </mt-popup>
     <mt-datetime-picker
@@ -61,11 +71,20 @@ export default {
     return {
       pickerDateValue: (new Date()),
       pickerTypeValue: '电',
+      pickerDevValue: '暖通机组AP11',
       popupVisible: false,
+      popupVisibleDev: false,
       slots: [
         {
           flex: 1,
           values: ['水', '电', '天然气', '压缩空气', '高温水', '综合能耗'],
+          textAlign: 'center'
+        }
+      ],
+      slotsDev: [
+        {
+          flex: 1,
+          values: ['暖通机组AP11', '暖通机组AP12', '暖通机组AP13', '制冷剂补水', '空压站'],
           textAlign: 'center'
         }
       ],
@@ -77,7 +96,7 @@ export default {
     dispDate() {
       return moment(this.pickerValue).format('YYYY年MM月')
     },
-    energyid() {
+    energytype() {
       if (this.pickerTypeValue === '水') {
         return '1'
       } else if (this.pickerTypeValue === '电') {
@@ -93,15 +112,30 @@ export default {
       } else {
         return '2'
       }
+    },
+    devid() {
+      if (this.pickerDevValue === '暖通机组AP11') {
+        return 'DB4009'
+      } else if (this.pickerDevValue === '暖通机组AP12') {
+        return 'DB4010'
+      } else if (this.pickerDevValue === '暖通机组AP13') {
+        return 'DB4011'
+      } else if (this.pickerDevValue === '制冷剂补水') {
+        return 'DB4012'
+      } else if (this.pickerDevValue === '空压站') {
+        return 'DB4023'
+      } else {
+        return 'DB4009'
+      }
     }
   },
   methods: {
     initData() {
-      fetch('post', api.EntElectricIndexchart, {date: moment(this.pickerValue).format('YYYY-MM'), energyid: this.energyid}, false).then((res) => {
+      fetch('post', api.EntElectricIndexchart, {date: moment(this.pickerValue).format('YYYY-MM'), energytype: this.energytype, devid: this.devid}, false).then((res) => {
         this.lineChartData = res.data.line
       }).catch(() => {
       })
-      fetch('post', api.EntElectricIndextable, {date: moment(this.pickerValue).format('YYYY-MM'), energyid: this.energyid}, false).then((res) => {
+      fetch('post', api.EntElectricIndextable, {date: moment(this.pickerValue).format('YYYY-MM'), energytype: this.energytype, devid: this.devid}, false).then((res) => {
         this.listData = res.data.list
       }).catch(() => {
       })
@@ -135,11 +169,18 @@ export default {
     onValuesChange(picker, values) {
       this.pickerTypeValue = values[0]
     },
+    onValuesChangeDev(picker, values) {
+      this.pickerDevValue = values[0]
+    },
     dateConfirm() {
       this.initData()
     },
     lxConfirm() {
       this.popupVisible = false
+      this.initData()
+    },
+    devConfirm() {
+      this.popupVisibleDev = false
       this.initData()
     }
   }

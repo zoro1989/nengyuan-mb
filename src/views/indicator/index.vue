@@ -5,10 +5,10 @@
     </mt-header>
     <div class="app-main">
       <div>
-        <div class="line"><span @click="popupVisible = true">选择能源类别</span></div>
-        <div class="line"><span @click="openPikerDate">选择日期</span></div>
+        <div class="line"><span @click="popupVisible = true">{{pickerTypeValue}}</span></div>
+        <div class="line"><span @click="openPikerDate">{{dispDate}}</span></div>
         <div class="chart-line">
-          <line-chart :chart-data="lineChartData" />
+          <line-chart :legendData="lineChartData.legendData" :seriesData="lineChartData.seriesData" :titleText="lineChartData.titleText" :xAxisData="lineChartData.xAxisData" />
         </div>
         <div class="line">
           <h3>能源指标：能源消耗总量</h3>
@@ -17,139 +17,31 @@
           <h4>已用占计划百分比：101.05%</h4>
           <h4>本月评价</h4>
           <ul class="line-group">
-            <li class="line-box">
-              <div class="line-item big">2018年11月1日</div>
+            <li class="line-box" v-for="(item, index) in dataList" :key="index">
+              <div class="line-item big">{{item.date}}</div>
               <div class="line-item big">
               <span class="legend">
                 <span class="c1"></span>
               </span>
-                计划用量：9128.04
+                计划用量：{{item.jhvalue}}
               </div>
               <div class="line-item big">
               <span class="legend">
                 <span class="c2"></span>
               </span>
-                实际用量:4683
+                实际用量：{{item.sjvalue}}
               </div>
               <div class="line-item big">
               <span class="legend">
                 <span class="c3"><span class="ball"></span></span>
               </span>
-                计划累计用量:9128.04
+                计划累计用量：{{item.jhljvalue}}
               </div>
               <div class="line-item big">
               <span class="legend">
                 <span class="c4"><span class="ball"></span></span>
               </span>
-                实际累计用量:4683
-              </div>
-            </li>
-            <li class="line-box">
-              <div class="line-item big">2018年11月1日</div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c1"></span>
-              </span>
-                计划用量：9128.04
-              </div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c2"></span>
-              </span>
-                实际用量:4683
-              </div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c3"><span class="ball"></span></span>
-              </span>
-                计划累计用量:9128.04
-              </div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c4"><span class="ball"></span></span>
-              </span>
-                实际累计用量:4683
-              </div>
-            </li>
-            <li class="line-box">
-              <div class="line-item big">2018年11月1日</div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c1"></span>
-              </span>
-                计划用量：9128.04
-              </div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c2"></span>
-              </span>
-                实际用量:4683
-              </div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c3"><span class="ball"></span></span>
-              </span>
-                计划累计用量:9128.04
-              </div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c4"><span class="ball"></span></span>
-              </span>
-                实际累计用量:4683
-              </div>
-            </li>
-            <li class="line-box">
-              <div class="line-item big">2018年11月1日</div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c1"></span>
-              </span>
-                计划用量：9128.04
-              </div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c2"></span>
-              </span>
-                实际用量:4683
-              </div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c3"><span class="ball"></span></span>
-              </span>
-                计划累计用量:9128.04
-              </div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c4"><span class="ball"></span></span>
-              </span>
-                实际累计用量:4683
-              </div>
-            </li>
-            <li class="line-box">
-              <div class="line-item big">2018年11月1日</div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c1"></span>
-              </span>
-                计划用量：9128.04
-              </div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c2"></span>
-              </span>
-                实际用量:4683
-              </div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c3"><span class="ball"></span></span>
-              </span>
-                计划累计用量:9128.04
-              </div>
-              <div class="line-item big">
-              <span class="legend">
-                <span class="c4"><span class="ball"></span></span>
-              </span>
-                实际累计用量:4683
+                实际累计用量：{{item.sjljvalue}}
               </div>
             </li>
           </ul>
@@ -203,7 +95,7 @@ export default {
         }
       ],
       lineChartData: [],
-      listData: []
+      dataList: []
     }
   },
   computed: {
@@ -231,11 +123,12 @@ export default {
   methods: {
     initData() {
       fetch('post', api.EntTotalIndexchart, {date: moment(this.pickerValue).format('YYYY-MM'), energytype: this.energytype}, false).then((res) => {
-        console.log(res.data)
+        this.lineChartData = res.data.line
       }).catch(() => {
       })
       fetch('post', api.EntTotalIndextable, {date: moment(this.pickerValue).format('YYYY-MM'), energytype: this.energytype}, false).then((res) => {
-        console.log(res.data)
+        this.dataList = res.dataList
+        console.log(this.dataList)
       }).catch(() => {
       })
     },
@@ -295,13 +188,13 @@ export default {
                     position: relative
                   .c1
                     height: 8px
-                    background: #34bfa3
+                    background: #FF005A
                   .c2
                     height: 8px
-                    background: #36a3f7
+                    background: #3888fa
                   .c3, .c4
                     .ball
-                      background: #f4516c
+                      background: #2EC7C9
                       border-radius: 50%
                       display:inline-block
                       width: 10px
@@ -312,14 +205,14 @@ export default {
                       top: 50%
                       left: 0
                       transform: translate3d(0, -100%, 0)
-                      background: #f4516c
+                      background: #2EC7C9
                       width: 100%
                       height: 2px
                   .c4
                     .ball
-                      background: #40c9c6
+                      background: #B6A2DE
                     &:before
-                      background: #40c9c6
+                      background: #B6A2DE
         h2
           font-size: 18px
         h3

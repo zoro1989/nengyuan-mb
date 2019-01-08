@@ -16,8 +16,8 @@
           <!--<h4>起止日期：2018年10月1日-2018年10月31日</h4>-->
           <ul class="line-group">
             <li class="line-box" v-for="(item, index) in listData" :key="index">
-              <div class="line-item">{{item.date}}</div>
-              <div class="line-item big">{{computedData(item)}}</div>
+              <div class="line-item">日期：{{item.date}}</div>
+              <div class="line-item big">用量：{{computedData(item)}}</div>
             </li>
           </ul>
         </div>
@@ -77,7 +77,7 @@ export default {
     dispDate() {
       return moment(this.pickerValue).format('YYYY年MM月')
     },
-    energyid() {
+    energytype() {
       if (this.pickerTypeValue === '水') {
         return '1'
       } else if (this.pickerTypeValue === '电') {
@@ -97,11 +97,11 @@ export default {
   },
   methods: {
     initData() {
-      fetch('post', api.EntElectricIndexchart, {date: moment(this.pickerValue).format('YYYY-MM'), energyid: this.energyid}, false).then((res) => {
+      fetch('post', api.EntElectricIndexchart, {date: moment(this.pickerValue).format('YYYY-MM'), energytype: this.energytype}, false).then((res) => {
         this.lineChartData = res.data.line
       }).catch(() => {
       })
-      fetch('post', api.EntElectricIndextable, {date: moment(this.pickerValue).format('YYYY-MM'), energyid: this.energyid}, false).then((res) => {
+      fetch('post', api.EntElectricIndextable, {date: moment(this.pickerValue).format('YYYY-MM'), energytype: this.energytype}, false).then((res) => {
         this.listData = res.data.list
       }).catch(() => {
       })

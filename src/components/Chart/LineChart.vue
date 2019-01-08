@@ -52,7 +52,7 @@ export default {
     return {
       chart: null,
       sidebarElm: null,
-      chartColor: ['#FF005A', '#3888fa']
+      chartColor: ['#FF005A', '#3888fa', '#2EC7C9', '#B6A2DE']
     }
   },
   watch: {
