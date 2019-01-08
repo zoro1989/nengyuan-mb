@@ -13,30 +13,29 @@
         </div>
         <div class="line">
           <h3>状态</h3>
-          <div class="line-item">额定电流le：200A</div>
-          <div class="line-item">额定功率Pe</div>
-          <div class="line-item">Imax</div>
-          <div class="line-item">Iave</div>
-          <div class="line-item">Imin</div>
-          <div class="line-item">Pmax</div>
-          <div class="line-item">Pave</div>
-          <div class="line-item">Pmin</div>
+          <div class="line-item">总量：{{tableData.total}}</div>
+          <div class="line-item">Imax：{{tableData.Imax}}</div>
+          <div class="line-item">Iavg：{{tableData.Iavg}}</div>
+          <div class="line-item">Imin：{{tableData.Imin}}</div>
+          <div class="line-item">Pmax：{{tableData.Pmax}}</div>
+          <div class="line-item">Pavg：{{tableData.Pavg}}</div>
+          <div class="line-item">Pmin：{{tableData.Pmin}}</div>
           <div class="line-item switch"><mt-switch v-model="isOpen">开关</mt-switch></div>
         </div>
-        <div class="flexable">
-          <div class="line">
-            <h3>峰值</h3>
-            <div class="line-item">昨天：<span>200</span></div>
-            <div class="line-item">今天：<span>200</span></div>
-            <div class="line-item">对比：<span>200</span></div>
-          </div>
-          <div class="line">
-            <h3>谷值</h3>
-            <div class="line-item">昨天：<span>200</span></div>
-            <div class="line-item">今天：<span>200</span></div>
-            <div class="line-item">对比：<span>200</span></div>
-          </div>
-        </div>
+        <!--<div class="flexable">-->
+          <!--<div class="line">-->
+            <!--<h3>峰值</h3>-->
+            <!--<div class="line-item">昨天：<span>200</span></div>-->
+            <!--<div class="line-item">今天：<span>200</span></div>-->
+            <!--<div class="line-item">对比：<span>200</span></div>-->
+          <!--</div>-->
+          <!--<div class="line">-->
+            <!--<h3>谷值</h3>-->
+            <!--<div class="line-item">昨天：<span>200</span></div>-->
+            <!--<div class="line-item">今天：<span>200</span></div>-->
+            <!--<div class="line-item">对比：<span>200</span></div>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
     </div>
     <mt-popup
@@ -76,7 +75,7 @@ export default {
         }
       ],
       lineChartData: [],
-      listData: [],
+      tableData: {},
       isOpen: true
     }
   },
@@ -108,7 +107,7 @@ export default {
       }).catch(() => {
       })
       fetch('post', api.SSContorlIndextable, {date: moment(this.pickerValue).format('YYYY-MM'), syscode: this.syscode}, false).then((res) => {
-        this.listData = res.data.list
+        this.tableData = res.data
       }).catch(() => {
       })
     },
