@@ -7,6 +7,7 @@
       <div>
         <div class="line"><span @click="popupVisible = true">{{pickerTypeValue}}</span></div>
         <div class="line"><span @click="popupVisibleCJ = true">{{pickerCJValue}}</span></div>
+        <div class="line"><mt-switch v-model="isMonth">{{isMonth? '按月查询' : '按年查询'}}</mt-switch></div>
         <div class="line"><span @click="openPikerDate">{{dispDate}}</span></div>
         <div class="chart-line">
           <line-chart :legendData="lineChartData.legendData" :seriesData="lineChartData.seriesData" :titleText="lineChartData.titleText" :xAxisData="lineChartData.xAxisData" />
@@ -43,7 +44,7 @@
       </mt-picker>
     </mt-popup>
     <mt-datetime-picker
-      class="only-month"
+      :class="isMonth ? 'only-month' : 'only-year'"
       v-model="pickerDateValue"
       type="date"
       ref="pickerDate"
@@ -89,12 +90,17 @@ export default {
         }
       ],
       lineChartData: [],
-      listData: []
+      listData: [],
+      isMonth: true
     }
   },
   computed: {
     dispDate() {
-      return moment(this.pickerValue).format('YYYY年MM月')
+      if (this.isMonth) {
+        return moment(this.pickerValue).format('YYYY年MM月')
+      } else {
+        return moment(this.pickerValue).format('YYYY年')
+      }
     },
     energytype() {
       if (this.pickerTypeValue === '水') {
@@ -147,11 +153,12 @@ export default {
   },
   methods: {
     initData() {
-      fetch('post', api.EntElectricIndexchart, {date: moment(this.pickerValue).format('YYYY-MM'), energytype: this.energytype, cjid: this.cjid}, false).then((res) => {
+      let date = this.isMonth ? moment(this.pickerValue).format('YYYY-MM') : moment(this.pickerValue).format('YYYY')
+      fetch('post', api.EntElectricIndexchart, {date: date, energytype: this.energytype, cjid: this.cjid}, false).then((res) => {
         this.lineChartData = res.data.line
       }).catch(() => {
       })
-      fetch('post', api.EntElectricIndextable, {date: moment(this.pickerValue).format('YYYY-MM'), energytype: this.energytype, cjid: this.cjid}, false).then((res) => {
+      fetch('post', api.EntElectricIndextable, {date: date, energytype: this.energytype, cjid: this.cjid}, false).then((res) => {
         this.listData = res.data.list
       }).catch(() => {
       })
