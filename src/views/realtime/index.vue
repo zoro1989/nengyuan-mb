@@ -14,15 +14,15 @@
         <div class="line">
           <h3>状态</h3>
           <div class="line-item">总量：{{tableData.total}}</div>
-          <div class="line-item">额定功率：{{tableData.total}}</div>
-          <div class="line-item">额定电流：{{tableData.total}}</div>
+          <div class="line-item">额定功率：{{tableData.power}}</div>
+          <div class="line-item">额定电流：{{tableData.electricity}}</div>
           <div class="line-item">Imax：{{tableData.Imax}}</div>
           <div class="line-item">Iavg：{{tableData.Iavg}}</div>
           <div class="line-item">Imin：{{tableData.Imin}}</div>
           <div class="line-item">Pmax：{{tableData.Pmax}}</div>
           <div class="line-item">Pavg：{{tableData.Pavg}}</div>
           <div class="line-item">Pmin：{{tableData.Pmin}}</div>
-          <div class="line-item switch"><mt-switch v-model="isOpen">开关</mt-switch></div>
+          <!--<div class="line-item switch"><mt-switch v-model="isOpen">开关</mt-switch></div>-->
         </div>
         <!--<div class="flexable">-->
           <!--<div class="line">-->

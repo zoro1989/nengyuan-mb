@@ -12,10 +12,11 @@
           <line-chart :legendData="lineChartData.legendData" :seriesData="lineChartData.seriesData" :titleText="lineChartData.titleText" :xAxisData="lineChartData.xAxisData" />
         </div>
         <div class="line">
-          <h3>能源指标：能源消耗总量</h3>
-          <h4>累计指标值</h4>
+          <!--<h3>能源指标：能源消耗总量</h3>-->
+          <h3>计划累计用量</h3>
           <h4>本月差值：8404</h4>
           <h4>已用占计划百分比：101.05%</h4>
+          <h4>实际占计划百分比：101.05%</h4>
           <h4>本月评价</h4>
           <ul class="line-group">
             <li class="line-box" v-for="(item, index) in dataList" :key="index">
