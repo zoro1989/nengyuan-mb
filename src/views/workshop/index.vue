@@ -154,11 +154,11 @@ export default {
   methods: {
     initData() {
       let date = this.isMonth ? moment(this.pickerValue).format('YYYY-MM') : moment(this.pickerValue).format('YYYY')
-      fetch('post', api.EntElectricIndexchart, {date: date, energytype: this.energytype, cjid: this.cjid}, false).then((res) => {
+      fetch('post', api.CJElectricIndexchart, {date: date, energytype: this.energytype, cjid: this.cjid}, false).then((res) => {
         this.lineChartData = res.data.line
       }).catch(() => {
       })
-      fetch('post', api.EntElectricIndextable, {date: date, energytype: this.energytype, cjid: this.cjid}, false).then((res) => {
+      fetch('post', api.CJElectricIndextable, {date: date, energytype: this.energytype, cjid: this.cjid}, false).then((res) => {
         this.listData = res.data.list
       }).catch(() => {
       })

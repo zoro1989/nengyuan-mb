@@ -138,11 +138,11 @@ export default {
   methods: {
     initData() {
       let date = this.isMonth ? moment(this.pickerValue).format('YYYY-MM') : moment(this.pickerValue).format('YYYY')
-      fetch('post', api.EntElectricIndexchart, {date: date, energytype: this.energytype, devid: this.devid}, false).then((res) => {
+      fetch('post', api.DevElectricIndexchart, {date: date, energytype: this.energytype, devid: this.devid}, false).then((res) => {
         this.lineChartData = res.data.line
       }).catch(() => {
       })
-      fetch('post', api.EntElectricIndextable, {date: date, energytype: this.energytype, devid: this.devid}, false).then((res) => {
+      fetch('post', api.DevElectricIndextable, {date: date, energytype: this.energytype, devid: this.devid}, false).then((res) => {
         this.listData = res.data.list
       }).catch(() => {
       })
