@@ -2,11 +2,13 @@ import axios from 'axios'
 import { Toast } from 'mint-ui'
 import { apiStatus } from '@/config'
 import router from '@/router'
+import NProgress from 'nprogress' // Progress 进度条
 // import {getToken} from 'common/js/cache'
 
 axios.defaults.withCredentials = true
 
 let fetch = (type, url, params, isFormData = true, showMessage = false) => {
+  NProgress.start()
   let service = axios.create({
     timeout: 30000
   })
@@ -21,6 +23,7 @@ let fetch = (type, url, params, isFormData = true, showMessage = false) => {
   })
 
   service.interceptors.response.use(response => {
+    NProgress.done()
     // 如果服务器出错，做出相应的处理，response.data后面的内容根据后端接口修改
     let res = JSON.parse(response.data.d)
     if (res.status && res.status !== apiStatus.success) {
@@ -36,6 +39,7 @@ let fetch = (type, url, params, isFormData = true, showMessage = false) => {
       return res
     }
   }, error => {
+    NProgress.done()
     console.log('response error', error)
     Toast('服务器出错：' + error)
     return Promise.reject(error)

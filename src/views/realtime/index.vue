@@ -105,7 +105,6 @@ export default {
     initData() {
       fetch('post', api.SSContorlIndexchart, {date: moment(this.pickerValue).format('YYYY-MM'), syscode: this.syscode}, false).then((res) => {
         this.lineChartData = res.data.line
-        console.log(this.lineChartData)
       }).catch(() => {
       })
       fetch('post', api.SSContorlIndextable, {date: moment(this.pickerValue).format('YYYY-MM'), syscode: this.syscode}, false).then((res) => {

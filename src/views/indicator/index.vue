@@ -14,12 +14,12 @@
         <div class="line">
           <!--<h3>能源指标：能源消耗总量</h3>-->
           <h3>计划累计用量</h3>
-          <h4>本月差值：8404</h4>
-          <h4>已用占计划百分比：101.05%</h4>
-          <h4>实际占计划百分比：101.05%</h4>
+          <h4>本月差值：{{dataObj.bycz}}</h4>
+          <h4>已用占计划百分比：{{dataObj.ljzb}}%</h4>
+          <h4>实际占计划百分比：{{dataObj.sjzjh}}%</h4>
           <h4>本月评价</h4>
           <ul class="line-group">
-            <li class="line-box" v-for="(item, index) in dataList" :key="index">
+            <li class="line-box" v-for="(item, index) in dataObj.dataList" :key="index">
               <div class="line-item big">{{item.date}}</div>
               <div class="line-item big">
               <span class="legend">
@@ -97,7 +97,7 @@ export default {
         }
       ],
       lineChartData: [],
-      dataList: [],
+      dataObj: {},
       isMonth: true
     }
   },
@@ -135,8 +135,7 @@ export default {
       }).catch(() => {
       })
       fetch('post', api.EntTotalIndextable, {date: date, energytype: this.energytype}, false).then((res) => {
-        this.dataList = res.dataList
-        console.log(this.dataList)
+        this.dataObj = res
       }).catch(() => {
       })
     },
