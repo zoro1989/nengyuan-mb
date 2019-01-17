@@ -13,9 +13,11 @@ const api = {
   // 车间用电量
   CJElectricIndexchart: apiPath + 'CJElectric.aspx/indexchart',
   CJElectricIndextable: apiPath + 'CJElectric.aspx/indextable',
+  DepatmentCjList: apiPath + 'Depatment.aspx/cjList',
   // 设备用电量
   DevElectricIndexchart: apiPath + 'DevElectric.aspx/indexchart',
   DevElectricIndextable: apiPath + 'DevElectric.aspx/indextable',
+  DepatmentDevList: apiPath + 'Depatment.aspx/devList',
   // 能效指标
   EntTotalIndexchart: apiPath + 'EntTotal.aspx/indexchart',
   EntTotalIndextable: apiPath + 'EntTotal.aspx/indextable',

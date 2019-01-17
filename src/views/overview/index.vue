@@ -32,12 +32,12 @@
       v-model="popupVisible"
       position="right">
       <ul class="menu-box">
-        <li class="menu-item"><svg-icon icon-class="sum" @click="changeType('6')" />企业能源消耗总量</li>
-        <li class="menu-item"><svg-icon icon-class="water" @click="changeType('1')" />企业水量</li>
-        <li class="menu-item"><svg-icon icon-class="electric" @click="changeType('2')" />企业电量</li>
-        <li class="menu-item"><svg-icon icon-class="gas" @click="changeType('3')" />企业天然气量</li>
-        <li class="menu-item"><svg-icon icon-class="air" @click="changeType('4')" />企业压缩空气量</li>
-        <li class="menu-item"><svg-icon icon-class="heightemp" @click="changeType('5')" />企业高温水量</li>
+        <li class="menu-item" @click="changeType('6')"><svg-icon icon-class="sum" />企业能源消耗总量</li>
+        <li class="menu-item" @click="changeType('1')"><svg-icon icon-class="water" />企业水量</li>
+        <li class="menu-item" @click="changeType('2')"><svg-icon icon-class="electric" />企业电量</li>
+        <li class="menu-item" @click="changeType('3')"><svg-icon icon-class="gas" />企业天然气量</li>
+        <li class="menu-item" @click="changeType('4')"><svg-icon icon-class="air" />企业压缩空气量</li>
+        <li class="menu-item" @click="changeType('5')"><svg-icon icon-class="heightemp" />企业高温水量</li>
         <li class="menu-item logout" @click="logout">退出登录</li>
       </ul>
     </mt-popup>

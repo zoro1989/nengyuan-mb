@@ -14,8 +14,10 @@
         <div class="line">
           <h3>状态</h3>
           <div class="line-item">总量：{{tableData.total}}</div>
-          <div class="line-item">额定功率：{{tableData.power}}</div>
-          <div class="line-item">额定电流：{{tableData.electricity}}</div>
+          <div class="line-item">额定电流：{{tableData.edi}}</div>
+          <div class="line-item">额定电压：{{tableData.edu}}</div>
+          <div class="line-item">额定功率：{{tableData.edp}}</div>
+          <div class="line-item">额定功率因：{{tableData.edf}}</div>
           <div class="line-item">Imax：{{tableData.Imax}}</div>
           <div class="line-item">Iavg：{{tableData.Iavg}}</div>
           <div class="line-item">Imin：{{tableData.Imin}}</div>
@@ -41,6 +43,7 @@
       </div>
     </div>
     <mt-popup
+      v-if="devices.length > 0"
       class="type-picker"
       v-model="popupVisible"
       position="bottom">
@@ -67,48 +70,55 @@ export default {
   data() {
     return {
       pickerDateValue: (new Date()),
-      pickerTypeValue: '暖通机组AP11',
+      pickerTypeValue: '',
       popupVisible: false,
       slots: [
         {
           flex: 1,
-          values: ['暖通机组AP11', '暖通机组AP12', '暖通机组AP13', '制冷剂补水', '空压站'],
+          values: [],
           textAlign: 'center'
         }
       ],
       lineChartData: [],
       tableData: {},
-      isOpen: true
+      isOpen: true,
+      devices: []
     }
   },
   computed: {
     dispDate() {
-      return moment(this.pickerValue).format('YYYY年MM月')
+      return moment(this.pickerDateValue).format('YYYY年MM月')
     },
     syscode() {
-      if (this.pickerTypeValue === '暖通机组AP11') {
-        return 'DB4009'
-      } else if (this.pickerTypeValue === '暖通机组AP12') {
-        return 'DB4010'
-      } else if (this.pickerTypeValue === '暖通机组AP13') {
-        return 'DB4011'
-      } else if (this.pickerTypeValue === '制冷剂补水') {
-        return 'DB4012'
-      } else if (this.pickerTypeValue === '空压站') {
-        return 'DB4023'
+      let index = this.devices.findIndex((item) => {
+        return item.name === this.pickerTypeValue
+      })
+      if (index >= 0) {
+        return this.devices[index].id
       } else {
-        return 'DB4009'
+        if (this.devices.length > 0) {
+          return this.devices[0].id
+        } else {
+          return ''
+        }
       }
     }
   },
   methods: {
     initData() {
-      fetch('post', api.SSContorlIndexchart, {date: moment(this.pickerValue).format('YYYY-MM'), syscode: this.syscode}, false).then((res) => {
-        this.lineChartData = res.data.line
-      }).catch(() => {
-      })
-      fetch('post', api.SSContorlIndextable, {date: moment(this.pickerValue).format('YYYY-MM'), syscode: this.syscode}, false).then((res) => {
-        this.tableData = res.data
+      fetch('post', api.DepatmentDevList, {}, false).then((res) => {
+        this.devices = res.list
+        this.slots[0].values = this.devices.map((item) => {
+          return item.name
+        })
+        fetch('post', api.SSContorlIndexchart, {date: moment(this.pickerDateValue).format('YYYY-MM'), syscode: this.syscode}, false).then((res) => {
+          this.lineChartData = res.data.line
+        }).catch(() => {
+        })
+        fetch('post', api.SSContorlIndextable, {date: moment(this.pickerDateValue).format('YYYY-MM'), syscode: this.syscode}, false).then((res) => {
+          this.tableData = res.data
+        }).catch(() => {
+        })
       }).catch(() => {
       })
     },

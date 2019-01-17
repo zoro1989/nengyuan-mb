@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <mt-header fixed title="企业用电量">
+    <mt-header fixed title="能效指标">
       <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
     </mt-header>
     <div class="app-main">
@@ -104,9 +104,9 @@ export default {
   computed: {
     dispDate() {
       if (this.isMonth) {
-        return moment(this.pickerValue).format('YYYY年MM月')
+        return moment(this.pickerDateValue).format('YYYY年MM月')
       } else {
-        return moment(this.pickerValue).format('YYYY年')
+        return moment(this.pickerDateValue).format('YYYY年')
       }
     },
     energytype() {
@@ -129,7 +129,7 @@ export default {
   },
   methods: {
     initData() {
-      let date = this.isMonth ? moment(this.pickerValue).format('YYYY-MM') : moment(this.pickerValue).format('YYYY')
+      let date = this.isMonth ? moment(this.pickerDateValue).format('YYYY-MM') : moment(this.pickerDateValue).format('YYYY')
       fetch('post', api.EntTotalIndexchart, {date: date, energytype: this.energytype}, false).then((res) => {
         this.lineChartData = res.data.line
       }).catch(() => {

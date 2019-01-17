@@ -56,6 +56,11 @@ export default new Router({
           path: 'warning',
           name: 'warning',
           component: () => import('@/views/warning/index')
+        },
+        {
+          path: 'netpic',
+          name: 'netpic',
+          component: () => import('@/views/netpic/index')
         }
       ]
     }

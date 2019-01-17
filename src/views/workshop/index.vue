@@ -35,6 +35,7 @@
       </mt-picker>
     </mt-popup>
     <mt-popup
+      v-if="stations.length > 0"
       class="type-picker"
       v-model="popupVisibleCJ"
       position="bottom">
@@ -85,21 +86,22 @@ export default {
       slotsCJ: [
         {
           flex: 1,
-          values: ['装备区', '涂装区', '焊装区', '工厂技术', '非照明技术', '生产给水', '生活给水', '锅炉房', '污水站', '空压站', '办公楼', '食堂', '机加区'],
+          values: [],
           textAlign: 'center'
         }
       ],
       lineChartData: [],
       listData: [],
-      isMonth: true
+      isMonth: true,
+      stations: []
     }
   },
   computed: {
     dispDate() {
       if (this.isMonth) {
-        return moment(this.pickerValue).format('YYYY年MM月')
+        return moment(this.pickerDateValue).format('YYYY年MM月')
       } else {
-        return moment(this.pickerValue).format('YYYY年')
+        return moment(this.pickerDateValue).format('YYYY年')
       }
     },
     energytype() {
@@ -120,46 +122,36 @@ export default {
       }
     },
     cjid() {
-      if (this.pickerCJValue === '装备区') {
-        return '21'
-      } else if (this.pickerCJValue === '涂装区') {
-        return '22'
-      } else if (this.pickerCJValue === '焊装区') {
-        return '23'
-      } else if (this.pickerCJValue === '工厂技术') {
-        return '24'
-      } else if (this.pickerCJValue === '非照明技术') {
-        return '25'
-      } else if (this.pickerCJValue === '生产给水') {
-        return '26'
-      } else if (this.pickerCJValue === '生活给水') {
-        return '27'
-      } else if (this.pickerCJValue === '锅炉房') {
-        return '28'
-      } else if (this.pickerCJValue === '污水站') {
-        return '29'
-      } else if (this.pickerCJValue === '空压站') {
-        return '30'
-      } else if (this.pickerCJValue === '办公楼') {
-        return '31'
-      } else if (this.pickerCJValue === '食堂') {
-        return '32'
-      } else if (this.pickerCJValue === '机加区') {
-        return '33'
+      let index = this.stations.findIndex((item) => {
+        return item.name === this.pickerCJValue
+      })
+      if (index >= 0) {
+        return this.stations[index].id
       } else {
-        return '21'
+        if (this.stations.length > 0) {
+          return this.stations[0].id
+        } else {
+          return ''
+        }
       }
     }
   },
   methods: {
     initData() {
-      let date = this.isMonth ? moment(this.pickerValue).format('YYYY-MM') : moment(this.pickerValue).format('YYYY')
-      fetch('post', api.CJElectricIndexchart, {date: date, energytype: this.energytype, cjid: this.cjid}, false).then((res) => {
-        this.lineChartData = res.data.line
-      }).catch(() => {
-      })
-      fetch('post', api.CJElectricIndextable, {date: date, energytype: this.energytype, cjid: this.cjid}, false).then((res) => {
-        this.listData = res.data.list
+      fetch('post', api.DepatmentCjList, {}, false).then((res) => {
+        this.stations = res.list
+        this.slotsCJ[0].values = this.stations.map((item) => {
+          return item.name
+        })
+        let date = this.isMonth ? moment(this.pickerDateValue).format('YYYY-MM') : moment(this.pickerDateValue).format('YYYY')
+        fetch('post', api.CJElectricIndexchart, {date: date, energytype: this.energytype, cjid: this.cjid}, false).then((res) => {
+          this.lineChartData = res.data.line
+        }).catch(() => {
+        })
+        fetch('post', api.CJElectricIndextable, {date: date, energytype: this.energytype, cjid: this.cjid}, false).then((res) => {
+          this.listData = res.data.list
+        }).catch(() => {
+        })
       }).catch(() => {
       })
     },

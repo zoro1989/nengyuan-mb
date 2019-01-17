@@ -1,6 +1,5 @@
 import router from '@/router'
 import NProgress from 'nprogress' // Progress 进度条
-import 'nprogress/nprogress.css'// Progress 进度条样式
 import { getToken } from '@/common/js/cache' // 验权
 
 const whiteList = ['/login'] // 不重定向白名单

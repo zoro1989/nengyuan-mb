@@ -36,6 +36,7 @@
     </mt-popup>
     <mt-popup
       class="type-picker"
+      v-if="devices.length > 0"
       v-model="popupVisibleDev"
       position="bottom">
       <mt-picker :slots="slotsDev" ref="pickerDev" :showToolbar="true" v-model="pickerDevValue" @change="onValuesChangeDev">
@@ -72,7 +73,7 @@ export default {
     return {
       pickerDateValue: (new Date()),
       pickerTypeValue: '电',
-      pickerDevValue: '暖通机组AP11',
+      pickerDevValue: '',
       popupVisible: false,
       popupVisibleDev: false,
       slots: [
@@ -85,21 +86,22 @@ export default {
       slotsDev: [
         {
           flex: 1,
-          values: ['暖通机组AP11', '暖通机组AP12', '暖通机组AP13', '制冷剂补水', '空压站'],
+          values: [],
           textAlign: 'center'
         }
       ],
       lineChartData: [],
       listData: [],
-      isMonth: true
+      isMonth: true,
+      devices: []
     }
   },
   computed: {
     dispDate() {
       if (this.isMonth) {
-        return moment(this.pickerValue).format('YYYY年MM月')
+        return moment(this.pickerDateValue).format('YYYY年MM月')
       } else {
-        return moment(this.pickerValue).format('YYYY年')
+        return moment(this.pickerDateValue).format('YYYY年')
       }
     },
     energytype() {
@@ -120,30 +122,36 @@ export default {
       }
     },
     devid() {
-      if (this.pickerDevValue === '暖通机组AP11') {
-        return 'DB4009'
-      } else if (this.pickerDevValue === '暖通机组AP12') {
-        return 'DB4010'
-      } else if (this.pickerDevValue === '暖通机组AP13') {
-        return 'DB4011'
-      } else if (this.pickerDevValue === '制冷剂补水') {
-        return 'DB4012'
-      } else if (this.pickerDevValue === '空压站') {
-        return 'DB4023'
+      let index = this.devices.findIndex((item) => {
+        return item.name === this.pickerDevValue
+      })
+      if (index >= 0) {
+        return this.devices[index].id
       } else {
-        return 'DB4009'
+        if (this.devices.length > 0) {
+          return this.devices[0].id
+        } else {
+          return ''
+        }
       }
     }
   },
   methods: {
     initData() {
-      let date = this.isMonth ? moment(this.pickerValue).format('YYYY-MM') : moment(this.pickerValue).format('YYYY')
-      fetch('post', api.DevElectricIndexchart, {date: date, energytype: this.energytype, devid: this.devid}, false).then((res) => {
-        this.lineChartData = res.data.line
-      }).catch(() => {
-      })
-      fetch('post', api.DevElectricIndextable, {date: date, energytype: this.energytype, devid: this.devid}, false).then((res) => {
-        this.listData = res.data.list
+      fetch('post', api.DepatmentDevList, {}, false).then((res) => {
+        this.devices = res.list
+        this.slotsDev[0].values = this.devices.map((item) => {
+          return item.name
+        })
+        let date = this.isMonth ? moment(this.pickerDateValue).format('YYYY-MM') : moment(this.pickerDateValue).format('YYYY')
+        fetch('post', api.DevElectricIndexchart, {date: date, energytype: this.energytype, devid: this.devid}, false).then((res) => {
+          this.lineChartData = res.data.line
+        }).catch(() => {
+        })
+        fetch('post', api.DevElectricIndextable, {date: date, energytype: this.energytype, devid: this.devid}, false).then((res) => {
+          this.listData = res.data.list
+        }).catch(() => {
+        })
       }).catch(() => {
       })
     },

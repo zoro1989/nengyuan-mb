@@ -60,7 +60,7 @@
               <div class="card-panel-text">异常报警</div>
             </div>
           </div>
-          <div class="card-panel">
+          <div class="card-panel" @click="changeRoute('/netpic')">
             <div class="card-panel-icon-wrapper">
               <svg-icon icon-class="dlwlt" class-name="card-panel-icon" />
               <div class="card-panel-text">动力网络图</div>
