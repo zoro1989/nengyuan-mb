@@ -17,13 +17,13 @@
           <div class="card-panel" @click="changeRoute('/enterprise')">
             <div class="card-panel-icon-wrapper">
               <svg-icon icon-class="qyydl" class-name="card-panel-icon" />
-              <div class="card-panel-text">企业用电量</div>
+              <div class="card-panel-text">企业能源统计</div>
             </div>
           </div>
           <div class="card-panel" @click="changeRoute('/workshop')">
             <div class="card-panel-icon-wrapper">
               <svg-icon icon-class="cjydl" class-name="card-panel-icon" />
-              <div class="card-panel-text">车间用电量</div>
+              <div class="card-panel-text">车间能源统计</div>
             </div>
           </div>
         </div>
@@ -31,7 +31,7 @@
           <div class="card-panel" @click="changeRoute('/device')">
             <div class="card-panel-icon-wrapper">
               <svg-icon icon-class="sbydl" class-name="card-panel-icon" />
-              <div class="card-panel-text">设备用电量</div>
+              <div class="card-panel-text">设备能源统计</div>
             </div>
           </div>
           <div class="card-panel" @click="changeRoute('/indicator')">

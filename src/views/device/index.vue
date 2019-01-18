@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <mt-header fixed :title="'设备用' + pickerTypeValue + '量'">
+    <mt-header fixed title="设备能源统计">
       <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
     </mt-header>
     <div class="app-main">

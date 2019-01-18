@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <mt-header fixed title="能源总览">
+    <mt-header fixed title="动力网络图">
       <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
     </mt-header>
     <div class="app-main">

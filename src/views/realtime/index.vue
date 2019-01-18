@@ -5,7 +5,7 @@
     </mt-header>
     <div class="app-main">
       <div>
-        <div class="line"><h2>空调设备可视化管理看板</h2></div>
+        <div class="line"><h2>{{pickerTypeValue}}可视化管理看板</h2></div>
         <div class="line"><span @click="popupVisible = true">{{pickerTypeValue}}</span></div>
         <div class="line">
           <h3>三相电流</h3>
@@ -17,7 +17,10 @@
           <div class="line-item">额定电流：{{tableData.edi}}</div>
           <div class="line-item">额定电压：{{tableData.edu}}</div>
           <div class="line-item">额定功率：{{tableData.edp}}</div>
-          <div class="line-item">额定功率因：{{tableData.edf}}</div>
+          <div class="line-item">额定功率因数：{{tableData.edf}}</div>
+          <div class="line-item">功率因数最大：{{tableData.PFmax}}</div>
+          <div class="line-item">功率因数最小：{{tableData.PFmin}}</div>
+          <div class="line-item">功率因数平均：{{tableData.PFavg}}</div>
           <div class="line-item">Imax：{{tableData.Imax}}</div>
           <div class="line-item">Iavg：{{tableData.Iavg}}</div>
           <div class="line-item">Imin：{{tableData.Imin}}</div>

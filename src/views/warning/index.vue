@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <mt-header fixed title="实时监测">
+    <mt-header fixed title="异常报警">
       <mt-button icon="back" slot="left" @click="goBack">返回</mt-button>
       <mt-button icon="more" slot="right" @click="popupVisible = true"></mt-button>
     </mt-header>

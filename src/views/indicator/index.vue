@@ -14,8 +14,8 @@
         <div class="line">
           <!--<h3>能源指标：能源消耗总量</h3>-->
           <h3>计划累计用量</h3>
+          <h4>累计指标值：{{dataObj.ljzb}}%</h4>
           <h4>本月差值：{{dataObj.bycz}}</h4>
-          <h4>已用占计划百分比：{{dataObj.ljzb}}%</h4>
           <h4>实际占计划百分比：{{dataObj.sjzjh}}%</h4>
           <h4>本月评价</h4>
           <ul class="line-group">
@@ -92,7 +92,7 @@ export default {
       slots: [
         {
           flex: 1,
-          values: ['能源消耗总量', '万元产值综合能耗', '万元产值电耗', '万元产值水耗', '万元产值天然气耗', '万元产值高温水耗'],
+          values: ['能源消耗总量', '万元产值综合能耗', '单台电耗', '单台耗水', '单台耗天然气', '单台耗高温水'],
           textAlign: 'center'
         }
       ],
@@ -114,13 +114,13 @@ export default {
         return '1'
       } else if (this.pickerTypeValue === '万元产值综合能耗') {
         return '2'
-      } else if (this.pickerTypeValue === '万元产值电耗') {
+      } else if (this.pickerTypeValue === '单台电耗') {
         return '3'
-      } else if (this.pickerTypeValue === '万元产值水耗') {
+      } else if (this.pickerTypeValue === '单台耗水') {
         return '4'
-      } else if (this.pickerTypeValue === '万元产值天然气耗') {
+      } else if (this.pickerTypeValue === '单台耗天然气') {
         return '5'
-      } else if (this.pickerTypeValue === '万元产值高温水耗') {
+      } else if (this.pickerTypeValue === '单台耗高温水') {
         return '6'
       } else {
         return '1'
