@@ -6,10 +6,10 @@
     </mt-header>
     <div class="app-main">
       <div>
-        <div class="line"><h2>{{dispDate}}企业能源消耗总览</h2></div>
+        <div class="line"><h2>{{dispDate}}{{dispTitle}}</h2></div>
         <div class="line"><span @click="openPiker">{{dispDate}}</span></div>
         <div class="line">
-          <h3>企业能源消耗总量</h3>
+          <h3>{{dispTitle}}</h3>
           <div class="line-item" v-for="(item, index) in dataList" :key="index">{{item.cjname}}：{{item.cjyl}}{{item.unit}}</div>
         </div>
         <div class="chart-line">
@@ -69,6 +69,21 @@ export default {
   computed: {
     dispDate() {
       return moment(this.pickerValue).format('YYYY年MM月')
+    },
+    dispTitle() {
+      if (this.energytype === '1') {
+        return '企业水量'
+      } else if (this.energytype === '2') {
+        return '企业电量'
+      } else if (this.energytype === '3') {
+        return '企业天然气量'
+      } else if (this.energytype === '4') {
+        return '企业压缩空气量'
+      } else if (this.energytype === '5') {
+        return '企业高温水量'
+      } else if (this.energytype === '6') {
+        return '企业能源消耗总量'
+      }
     }
   },
   methods: {

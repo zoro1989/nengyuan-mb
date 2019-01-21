@@ -1,7 +1,8 @@
 // let apiPath = '/api/';
 // let apiPath = 'http://47.95.14.172:8088/web/';
 // let apiPath = 'http://rancode.jymenu.com/';
-let apiPath = 'http://2g2836a817.iask.in:13498/app/'
+// let apiPath = 'http://2g2836a817.iask.in:13498/app/'
+let apiPath = 'http://231l61s311.iask.in:45234/app/'
 // let apiPath = 'app/'
 const api = {
   // 能源总览

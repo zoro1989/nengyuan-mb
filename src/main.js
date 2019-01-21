@@ -19,25 +19,37 @@ Vue.use(MintUI)
 Vue.use(VueCorvova)
 Vue.config.productionTip = false
 /* eslint-disable no-new */
-fastclick.attach(document.body)
-new Vue({
-  el: '#app',
-  router,
-  render: h => h(App)
+Vue.cordova.on('deviceready', () => {
+  console.log('Cordova : device is ready !')
+  fastclick.attach(document.body)
+  new Vue({
+    el: '#app',
+    router,
+    render: h => h(App)
+  })
+  document.addEventListener('jpush.receiveRegistrationId', function (event) {
+    console.log(event.registrationId)
+  }, false)
+  window.JPush.init()
+  window.JPush.setDebugMode(true)
+  getRegistrationID()
+  document.addEventListener('jpush.openNotification', function (event) {
+    let alertContent = ''
+    if (window.device.platform === 'Android') {
+      alertContent = event.alert
+    } else {
+      alertContent = event.aps.alert
+    }
+    alert(alertContent)
+    console.log(alertContent)
+    router.push('/warning')
+  }, false)
 })
-document.addEventListener('jpush.receiveRegistrationId', function (event) {
-  console.log(event.registrationId)
-}, false)
-window.JPush.init()
-window.JPush.setDebugMode(true)
-document.addEventListener('jpush.openNotification', function (event) {
-  let alertContent = ''
-  if (window.device.platform === 'Android') {
-    alertContent = event.alert
-  } else {
-    alertContent = event.aps.alert
+function getRegistrationID() {
+  window.JPush.getRegistrationID(onGetRegistrationID)
+}
+function onGetRegistrationID(data) {
+  if (data.length === 0) {
+    window.setTimeout(getRegistrationID, 1000)
   }
-  alert(alertContent)
-  console.log(alertContent)
-  router.push('/warning')
-}, false)
+}

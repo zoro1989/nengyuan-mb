@@ -13,11 +13,11 @@
         </div>
         <div class="line">
           <!--<h3>能源指标：能源消耗总量</h3>-->
-          <h3>计划累计用量</h3>
+          <h3>{{pickerTypeValue}}</h3>
           <h4>累计指标值：{{dataObj.ljzb}}%</h4>
           <h4>本月差值：{{dataObj.bycz}}</h4>
           <h4>实际占计划百分比：{{dataObj.sjzjh}}%</h4>
-          <h4>本月评价</h4>
+          <!--<h4>本月评价</h4>-->
           <ul class="line-group">
             <li class="line-box" v-for="(item, index) in dataObj.dataList" :key="index">
               <div class="line-item big">{{item.date}}</div>
