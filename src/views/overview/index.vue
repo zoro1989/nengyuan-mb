@@ -13,7 +13,7 @@
           <div class="line-item" v-for="(item, index) in dataList" :key="index">{{item.cjname}}：{{item.cjyl}}{{item.unit}}</div>
         </div>
         <div class="chart-line">
-          <pie-chart :legendData="pie.legendData" :seriesData="pie.seriesData" :titleText="pie.titleText"/>
+          <pie-chart :legendData="pie.legendData" :seriesData="pie.seriesData" :titleText="pie.titleText + '占比'"/>
         </div>
       </div>
     </div>

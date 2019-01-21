@@ -5,7 +5,7 @@
     </mt-header>
     <div class="app-main">
       <div>
-        <img class="image" :src="Wangluotu">
+        <img class="image" :src="Wangluotu" v-preview="Wangluotu" preview-title-enable="true" preview-nav-enable="true">
       </div>
     </div>
   </div>

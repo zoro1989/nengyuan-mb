@@ -9,6 +9,8 @@ import fastclick from 'fastclick'
 import 'common/stylus/index.styl'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
+import vuePicturePreview from 'vue-picture-preview'
+Vue.use(vuePicturePreview)
 
 /* eslint-disable no-unused-vars */
 // import VConsole from 'vconsole'
@@ -19,6 +21,12 @@ Vue.use(MintUI)
 Vue.use(VueCorvova)
 Vue.config.productionTip = false
 /* eslint-disable no-new */
+// fastclick.attach(document.body)
+// new Vue({
+//   el: '#app',
+//   router,
+//   render: h => h(App)
+// })
 Vue.cordova.on('deviceready', () => {
   console.log('Cordova : device is ready !')
   fastclick.attach(document.body)
