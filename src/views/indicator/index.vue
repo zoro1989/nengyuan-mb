@@ -25,25 +25,25 @@
               <span class="legend">
                 <span class="c1"></span>
               </span>
-                计划用量：{{item.jhvalue}}
+                {{item.jhname}}：{{item.jhvalue}}
               </div>
               <div class="line-item big">
               <span class="legend">
                 <span class="c2"></span>
               </span>
-                实际用量：{{item.sjvalue}}
+                {{item.sjname}}：{{item.sjvalue}}
               </div>
               <div class="line-item big">
               <span class="legend">
                 <span class="c3"><span class="ball"></span></span>
               </span>
-                计划累计用量：{{item.jhljvalue}}
+                {{item.jhljname}}：{{item.jhljvalue}}
               </div>
               <div class="line-item big">
               <span class="legend">
                 <span class="c4"><span class="ball"></span></span>
               </span>
-                实际累计用量：{{item.sjljvalue}}
+                {{item.sjljname}}：{{item.sjljvalue}}
               </div>
             </li>
           </ul>
