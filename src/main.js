@@ -9,8 +9,9 @@ import fastclick from 'fastclick'
 import 'common/stylus/index.styl'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
-import vuePicturePreview from 'vue-picture-preview'
-Vue.use(vuePicturePreview)
+import preview from 'vue-photo-preview'
+import 'vue-photo-preview/dist/skin.css'
+Vue.use(preview)
 
 /* eslint-disable no-unused-vars */
 // import VConsole from 'vconsole'
