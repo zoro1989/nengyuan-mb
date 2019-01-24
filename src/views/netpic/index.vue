@@ -5,7 +5,26 @@
     </mt-header>
     <div class="app-main">
       <div>
-        <img class="image" :src="Wangluotu" :preview="Wangluotu">
+        <div class="image-box">
+          <span class="title">公用管线平面图</span>
+          <img class="image" :src="Wangluotu" :preview="1" preview-text="公用管线平面图">
+        </div>
+        <div class="image-box">
+          <span class="title">公用管线平面图</span>
+          <img class="image" :src="Wangluotu" :preview="1" preview-text="公用管线平面图">
+        </div>
+        <div class="image-box">
+          <span class="title">公用管线平面图</span>
+          <img class="image" :src="Wangluotu" :preview="1" preview-text="公用管线平面图">
+        </div>
+        <div class="image-box">
+          <span class="title">公用管线平面图</span>
+          <img class="image" :src="Wangluotu" :preview="1" preview-text="公用管线平面图">
+        </div>
+        <div class="image-box">
+          <span class="title">公用管线平面图</span>
+          <img class="image" :src="Wangluotu" :preview="1" preview-text="公用管线平面图">
+        </div>
       </div>
     </div>
   </div>
@@ -28,6 +47,13 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .main-container
     .app-main
-      .image
-        width: 100%
+      .image-box
+        position: relative
+        display: inline-block
+        width: 30%
+        padding: 10px
+        .title
+          font-size: 12px
+        .image
+          width: 100%
 </style>

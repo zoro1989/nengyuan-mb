@@ -46,6 +46,12 @@ export default {
     titleText: {
       type: String,
       default: '300px'
+    },
+    yAxis: {
+      type: Array,
+      default: () => {
+        return []
+      }
     }
   },
   data() {
@@ -107,11 +113,27 @@ export default {
           },
           padding: [5, 10]
         },
-        yAxis: {
-          axisTick: {
-            show: false
+        yAxis: (() => {
+          let res = []
+          for (let i = 0; i < this.yAxis.length; i++) {
+            res.push({
+              type: 'value',
+              name: this.yAxis[i].name,
+              axisTick: {
+                show: false
+              }
+            })
           }
-        },
+          if (res.length === 0) {
+            return {
+              axisTick: {
+                show: false
+              }
+            }
+          } else {
+            return res
+          }
+        })(),
         legend: {
           data: this.legendData
         },
@@ -134,6 +156,9 @@ export default {
               data: series[i].data,
               animationDuration: 2800,
               animationEasing: 'cubicInOut'
+            }
+            if (item.type === 'line' && this.yAxis.length > 1) {
+              item.yAxisIndex = 1
             }
             res.push(item)
           }

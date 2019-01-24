@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       pickerDateValue: (new Date()),
-      pickerTypeValue: '电',
+      pickerTypeValue: '水',
       popupVisible: false,
       slots: [
         {

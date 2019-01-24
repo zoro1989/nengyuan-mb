@@ -9,12 +9,12 @@
         <div class="line"><mt-switch v-model="isMonth">{{isMonth? '按月查询' : '按年查询'}}</mt-switch></div>
         <div class="line"><span @click="openPikerDate">{{dispDate}}</span></div>
         <div class="chart-line">
-          <line-chart :legendData="lineChartData.legendData" :seriesData="lineChartData.seriesData" :titleText="lineChartData.titleText" :xAxisData="lineChartData.xAxisData" />
+          <line-chart :legendData="lineChartData.legendData" :seriesData="lineChartData.seriesData" :titleText="lineChartData.titleText" :xAxisData="lineChartData.xAxisData" :yAxis="yAxis" />
         </div>
         <div class="line">
           <!--<h3>能源指标：能源消耗总量</h3>-->
           <h3>{{pickerTypeValue}}</h3>
-          <h4>累计指标值：{{dataObj.ljzb}}%</h4>
+          <h4>累计指标值：{{dataObj.ljzb}}</h4>
           <h4>本月差值：{{dataObj.bycz}}</h4>
           <h4>实际占计划百分比：{{dataObj.sjzjh}}%</h4>
           <!--<h4>本月评价</h4>-->
@@ -102,6 +102,23 @@ export default {
     }
   },
   computed: {
+    yAxis() {
+      if (this.pickerTypeValue === '能源消耗总量') {
+        return [{name: '吨标煤'}, {name: '吨标煤'}]
+      } else if (this.pickerTypeValue === '万元产值综合能耗') {
+        return [{name: '吨标煤/万元'}, {name: '吨标煤/万元'}]
+      } else if (this.pickerTypeValue === '单台电耗') {
+        return [{name: '千瓦时'}, {name: '千瓦时'}]
+      } else if (this.pickerTypeValue === '单台耗水') {
+        return [{name: '吨'}, {name: '吨'}]
+      } else if (this.pickerTypeValue === '单台耗天然气') {
+        return [{name: '立方米'}, {name: '立方米'}]
+      } else if (this.pickerTypeValue === '单台耗高温水') {
+        return [{name: '吨'}, {name: '吨'}]
+      } else {
+        return []
+      }
+    },
     dispDate() {
       if (this.isMonth) {
         return moment(this.pickerDateValue).format('YYYY年MM月')
